@@ -1,0 +1,130 @@
+using System;
+using System.Data;
+using System.IO;
+using System.Web.UI;
+using NPOI.SS.UserModel;
+using System.Collections.Generic;
+
+
+public partial class Forms_EBTask_CASA7100 : basePage
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+    }
+    //流程：1.上傳Excel檔。2. ASP.net讀Excel資料，然後Insert into Table。3.刪除上傳的Excel檔，避免硬碟空間不夠。
+    protected void btnUploadExcel_Click(object sender, EventArgs e)
+    {
+        //NPOI 2.0起，要讀取舊的 Excel檔，副檔名 .xls  ( Excel 2003（含）以前的版本) 用 HSSF;
+        //要讀取新的 Excel檔，副檔名 .xlsx  ( Excel 2007（含）以前的版本) 用 XSSF
+
+        string SaveFolder = Server.MapPath(@"ExcelTemp/");
+
+        try
+        {
+            #region 上傳、存檔、匯入Excel檔
+            string FileName = string.Empty;
+            string SavePath = string.Empty;
+
+            if (!System.IO.Directory.Exists(SaveFolder))
+                System.IO.Directory.CreateDirectory(SaveFolder);
+
+            if (fuExcel != null && fuExcel.HasFile)
+            {
+                FileName = Guid.NewGuid().ToString() + ".xlsx";
+
+                SavePath = SaveFolder + FileName;
+
+                //同檔名則覆蓋
+                fuExcel.SaveAs(SavePath);
+                //string extention = FileName.Split('.')[1];
+            }
+            #endregion
+
+
+            DataTable ExcelTable = ImportXLS(SavePath);
+
+            GridView1.DataSource = ExcelTable;
+            GridView1.DataBind();
+        }
+        catch (Exception err)
+        {
+            string sMsg = err.Message.Replace("\r\n", "\n").Replace("\n", "\\n");
+            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), this.ClientID, string.Format("alert('{0}');", sMsg), true);
+        }
+    }
+
+    /// <summary>
+    /// 匯入副檔名為.xls的Excel檔th
+    /// </summary>
+    private DataTable ImportXLS(string file)
+    {
+        DataTable dt = new DataTable();
+        IWorkbook workbook;
+        string fileExt = Path.GetExtension(file).ToLower();
+        using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read))
+        {
+            //XSSFWorkbook 適用XLSX格式，HSSFWorkbook 適用XLS格式
+            if (fileExt == ".xlsx") { workbook = new NPOI.XSSF.UserModel.XSSFWorkbook(fs); } else if (fileExt == ".xls") { workbook = new NPOI.HSSF.UserModel.HSSFWorkbook(fs); } else { workbook = null; }
+            if (workbook == null) { return null; }
+            ISheet sheet = workbook.GetSheetAt(0);
+
+            //表頭  
+            IRow header = sheet.GetRow(sheet.FirstRowNum);
+           List<int> columns = new List<int>();
+            for (int i = 0; i < header.LastCellNum; i++)
+            {
+                object obj = GetValueType(header.GetCell(i));
+                if (obj == null || obj.ToString() == string.Empty)
+                {
+                    dt.Columns.Add(new DataColumn("Columns" + i.ToString()));
+                }
+                else
+                    dt.Columns.Add(new DataColumn(obj.ToString()));
+                columns.Add(i);
+            }
+            //資料  
+            for (int i = sheet.FirstRowNum + 1; i <= sheet.LastRowNum; i++)
+            {
+                DataRow dr = dt.NewRow();
+                bool hasValue = false;
+                foreach (int j in columns)
+                {
+                    dr[j] = GetValueType(sheet.GetRow(i).GetCell(j));
+                    if (dr[j] != null && dr[j].ToString() != string.Empty)
+                    {
+                        hasValue = true;
+                    }
+                }
+                if (hasValue)
+                {
+                    dt.Rows.Add(dr);
+                }
+            }
+        }
+        return dt;
+    }
+
+    private static object GetValueType(ICell cell)
+    {
+        if (cell == null)
+            return null;
+        switch (cell.CellType)
+        {
+            case CellType.Blank: //BLANK:  
+                return null;
+            case CellType.Boolean: //BOOLEAN:  
+                return cell.BooleanCellValue;
+            case CellType.Numeric: //NUMERIC:  
+                return cell.NumericCellValue;
+            case CellType.String: //STRING:  
+                return cell.StringCellValue;
+            case CellType.Error: //ERROR:  
+                return cell.ErrorCellValue;
+            case CellType.Formula: //FORMULA:  
+            default:
+                return "=" + cell.CellFormula;
+        }
+    }
+
+}
