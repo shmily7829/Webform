@@ -1,0 +1,213 @@
+﻿using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using System.Text;
+
+public partial class iTask : basePage
+{
+    Vista.SEC.Business.Security myBiz = new Vista.SEC.Business.Security();
+    Vista.SEC.Business.SystemPageBiz mySysBiz = new Vista.SEC.Business.SystemPageBiz();
+
+    DataTable dtCIADUrl;
+
+    /// <summary>
+    /// 取得選擇的系統
+    /// </summary>
+    private string GetSystemID
+    {
+        get { return (Request.QueryString["SystemID"] + "").Trim(); }
+    }
+
+    /// <summary>
+    /// 20120614[Jimull] ： 針對外部廠商系統的url路徑，如果是ASIA內部系統 ，_RootPath會為空字串並不影響路徑參考
+    /// </summary>
+    private string _RootPath;
+
+    /// <summary>
+    /// 20120705[Jimull] ：經 2012/0703(二)，由 外面廠商 LAN com 的 Season Wu 提出反應，
+    /// 因本系統框架會把LANcom 相關系統的 Querystring 加密導致它們自身系統無法解密回去
+    /// 因此與會 ANZ Security 相關人員決議後
+    /// 目前先只 " 針對 亞洲致遠 ASVT 相關系統的功能清單 Querystring 進行加密，其他系統則不進行加密  "
+    /// ASVT 相關人員： Brian, Greason, Jimull
+    /// ANZ+LANcom相關人員：
+    /// Season Wu; Lai, George; Lo, Dana; Gladys Yen; Jiang, Eddie; Huang, Jason; Chiu, Kate; Chen, Winona; Wang, Jeff; Astin Cheng
+    /// </summary>
+    private string _3DESList;
+
+    private string _3DESListKey = "ASVTWEB3DESLIST";
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        //支援Safari瀏覽器
+        UltraWebListbar1.BrowserTarget = Infragistics.WebUI.UltraWebListbar.BrowserTarget.UpLevel;
+
+        if (!IsPostBack)
+        {
+            object test =  Request.Url;
+
+            if (Request.UrlReferrer == null || !Request.UrlReferrer.AbsoluteUri.ToLower().Contains("/default.aspx"))
+            {
+                Server.Transfer(Request.ApplicationPath + "/LoginFailed.aspx");
+                return;
+            }
+
+            DataSet dsTemp;
+
+            if (string.IsNullOrEmpty(GetSystemID))
+            {
+                dsTemp = myBiz.GetAuthList(base.strUserID, 0) as DataSet;
+            }
+            else
+            {
+                dsTemp = myBiz.GetAuthList(base.strUserID, 0, GetSystemID) as DataSet;
+            }
+
+            SetWebSiteRootPath();
+            Set3DESValue();
+            this.BindTree(dsTemp);
+        }
+    }
+
+    /// <summary>
+    /// 20120614[Jimull] ： 針對外部廠商系統的url路徑，如果是ASIA內部系統 ，_RootPath會為空字串並不影響路徑參考
+    /// </summary>
+    private void SetWebSiteRootPath()
+    {
+        dtCIADUrl = mySysBiz.GetSystemParameterList(GetSystemID + "WebSite", GetSystemID);
+        if (dtCIADUrl.Rows.Count > 0)
+        {
+            _RootPath = dtCIADUrl.Rows[0]["ParameterValue"].ToString().Trim();
+        }
+        else
+        {
+            _RootPath = string.Empty;
+        }
+    }
+
+    /// <summary>
+    /// 20120705[Jimull] ：經 2012/0703(二)，由 外面廠商 LAN com 的 Season Wu 提出，
+    /// 因本系統框架會把LANcom 相關系統的 Querystring 加密導致它們自身系統無法解密回去
+    /// 因此與會 ANZ Security 相關人員決議後
+    /// 目前先只 " 針對 亞洲致遠 ASVT 相關系統的功能清單 Querystring 進行加密，其他系統則不進行加密  "
+    /// ASVT 相關人員： Brian, Greason, Jimull
+    /// ANZ+LANcom相關人員：
+    /// Season Wu; Lai, George; Lo, Dana; Gladys Yen; Jiang, Eddie; Huang, Jason; Chiu, Kate; Chen, Winona; Wang, Jeff; Astin Cheng
+    /// </summary>
+    private void Set3DESValue()
+    {
+        DataTable _dt = mySysBiz.GetSystemParameterList(_3DESListKey, string.Empty);
+        if (_dt.Rows.Count > 0)
+        {
+            _3DESList = _dt.Rows[0]["ParameterValue"].ToString().Trim();
+        }
+        else
+        {
+            _3DESList = string.Empty;
+        }
+    }
+
+
+    #region TreeView
+
+    /// <summary>
+    /// 建立樹狀結構
+    /// </summary>
+    private void BindTree(DataSet dsMenu)
+    {
+        //根目錄層
+        DataRow[] Rows = dsMenu.Tables[0].Select(string.Format("OrderBy='{0}' ", "00"));
+
+        for (int i = 0; i < Rows.Length; i++)
+        {
+            Infragistics.WebUI.UltraWebListbar.Group gp = UltraWebListbar1.Groups.Add("<table border=0 cellpadding=0 cellspacing=0 ><tr><td valign='middle' class='text00'>" + Rows[i]["FunctionName"].ToString().Trim() + "</td></tr></table>");
+            gp.Tag = Rows[i]["GroupBy"].ToString().Trim();
+
+            //20120420: 增加 IsShow 屬性控制 
+            //DataRow[] newRows = dsMenu.Tables[0].Select(" GroupBy ='" + Rows[i]["GroupBy"].ToString().Trim() + "'");
+            DataRow[] newRows = dsMenu.Tables[0].Select(" GroupBy ='" + Rows[i]["GroupBy"].ToString().Trim() + "' and IsShow='Y'");
+
+            //還有下層的使用下拉選單 
+            if (newRows.Length > 0)
+            {
+                //開始遞迴處理
+                BindTree3(dsMenu, gp);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 樹狀結構
+    /// </summary>
+    /// <param name="dsMenu"></param>
+    /// <param name="parentNode"></param>
+    private void BindTree3(DataSet dsMenu, Infragistics.WebUI.UltraWebListbar.Group parentNode)//DataSet dsMenu, TreeNode parentNode)
+    {
+        string strTempQ;       // URL QueryString 加密字串
+
+        string strFunctionID;                   // 功能代碼
+        string strFunctionName;                 // 功能名稱
+        string strProgramPath;                  // 功能路徑
+        string strProgramPathQueryString; //網址後端所帶的 Querystring
+
+        //20120420: 增加 IsShow 屬性控制 
+        //DataRow[] Rows = dsMenu.Tables[0].Select("GroupBy='" + parentNode.Tag.ToString().Trim() + "' and OrderBy<>'00'", "OrderBy");
+        DataRow[] Rows = dsMenu.Tables[0].Select("GroupBy='" + parentNode.Tag.ToString().Trim() + "' and OrderBy<>'00' and IsShow='Y'", "OrderBy");
+
+        for (int i = 0; i < Rows.Length; i++)
+        {
+            Infragistics.WebUI.UltraWebListbar.Item parentNode2;
+
+            strTempQ = strFunctionID = strFunctionName = strProgramPath = strProgramPathQueryString = string.Empty;  //每個 cycle 必須將變數清空
+
+            strFunctionName = Rows[i]["FunctionName"].ToString().Trim();
+            strFunctionID = Rows[i]["FunctionID"].ToString().Trim();    //取得功能代碼
+
+            //20120614 針對外部廠商系統的url路徑，如果是ASIA內部系統 ，_RootPath會為空字串並不影響路徑參考
+            //strProgramPath = Rows[i]["ProgramPath"].ToString().Trim();  //先取得完整路徑
+            strProgramPath = _RootPath + Rows[i]["ProgramPath"].ToString().Trim();  //先取得完整路徑
+
+            if (strProgramPath.IndexOf("?") != -1) //如果該網址不具有 Querystring 則不進行 Querystring 加密動作
+            {
+                strProgramPathQueryString = strProgramPath.Substring(strProgramPath.IndexOf("?") + 1);  //取得 Querystring (不含"?"符號)
+                strProgramPath = strProgramPath.Substring(0, strProgramPath.IndexOf("?"));      //再替換成只取網址到 Querystring 前(不含"?"符號)
+            }
+
+            if (_3DESList.Contains(GetSystemID))
+            {
+                //帶入功能代碼、Querystring (有可能為空字串) 進行 Querystring 加密動作
+                strTempQ = base.GetEncryptURLParamenterString(strFunctionID, strProgramPathQueryString);//取代 base.GetEncryptString("strFunctionID=" + Rows[i]["FunctionID"].ToString().Trim());
+            }
+            else
+            {
+                strTempQ = strProgramPathQueryString;
+            }
+
+    
+            if (string.IsNullOrEmpty(strProgramPath))
+            {
+                //如沒有附上連結網址則設定為該功能根目錄下的子目錄
+                parentNode2 =
+                      parentNode.Items.Add("<table border=0 cellpadding=0 cellspacing=0 width='100%'><tr><td valign='middle' class='SubMenu'><img src='Images/icon_node3.gif'/>&nbsp;" + strFunctionName + "</td></tr></table>");
+            }
+            else
+            {
+                //功能選項
+                parentNode2 =
+                    parentNode.Items.Add("<table name='tb" + strFunctionID + "'  border=0 cellpadding=0 cellspacing=0 width='100%'><tr><td valign='middle'><!--img src='Images/arrow-turn-u.gif'/-->&nbsp;<a name='" + strFunctionID + "'  class='link-03-item' href='javascript:;' onclick=shows('" + strProgramPath + (string.IsNullOrEmpty(strTempQ)? "":("?" + strTempQ)) + "');ClickItem(this.name);>" + strFunctionName + "</a></td></tr></table>");
+            }
+
+            parentNode2.Tag = strFunctionID;
+
+            parentNode2.TargetFrame = "mainFrame";
+        }
+    }
+
+    #endregion
+}

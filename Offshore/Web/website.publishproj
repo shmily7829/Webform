@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+***********************************************************************************************
+website.publishproj
+
+警告: 請勿修改此檔案，它是在進行 Web 發行程序所使用。
+
+Copyright (C) Microsoft Corporation. 著作權所有，並保留一切權利。
+
+***********************************************************************************************
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.30319</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3fd55664-0b12-40aa-aaac-370841ba98c2}</ProjectGuid>
+    <SourceWebPhysicalPath>$(MSBuildThisFileDirectory)</SourceWebPhysicalPath>
+    <SourceWebVirtualPath>/Web</SourceWebVirtualPath>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SourceWebProject>
+    </SourceWebProject>
+    <SourceWebMetabasePath>
+    </SourceWebMetabasePath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <!-- for VS2010 we need to use 10.5 but for VS2012+ we should use VisualStudioVersion -->
+    <WebPublishTargetsVersion Condition=" '$(WebPublishTargetsVersion)' =='' and '$(VisualStudioVersion)' == 10.0 ">10.5</WebPublishTargetsVersion>
+    <WebPublishTargetsVersion Condition=" '$(WebPublishTargetsVersion)'=='' ">$(VisualStudioVersion)</WebPublishTargetsVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(WebPublishTargetsVersion)</VSToolsPath>
+    <_WebPublishTargetsPath Condition=" '$(_WebPublishTargetsPath)'=='' ">$(VSToolsPath)</_WebPublishTargetsPath>
+    <AssemblyFileVersion Condition="'$(AssemblyFileVersion)' == ''">1.0.0.0</AssemblyFileVersion>
+    <AssemblyVersion Condition="'$(AssemblyVersion)' == ''">1.0.0.0</AssemblyVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <AssemblyAttributes Include="AssemblyFileVersion">
+      <Value>$(AssemblyFileVersion)</Value>
+    </AssemblyAttributes>
+    <AssemblyAttributes Include="AssemblyVersion">
+      <Value>$(AssemblyVersion)</Value>
+    </AssemblyAttributes>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BKS\BKS.csproj">
+      <Project>{52770AEC-7AB7-40B2-BB57-8B0BBD459A2A}</Project>
+      <Name>BKS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vista.Common\Vista.Common.csproj">
+      <Project>{13A788E7-5A77-44D6-B057-222A9C696B2E}</Project>
+      <Name>Vista.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vista.Business\Vista.Business.csproj">
+      <Project>{68C8416E-8542-4E46-8B33-DF3311E25BEB}</Project>
+      <Name>Vista.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vista.DataAccess\Vista.DataAccess.csproj">
+      <Project>{28FD7E4C-198E-469B-9AC0-D91A46602555}</Project>
+      <Name>Vista.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vista.Information\Vista.Information.csproj">
+      <Project>{DE9862A4-E7D1-41C7-8FBC-3F0F09895BFF}</Project>
+      <Name>Vista.Information</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(_WebPublishTargetsPath)\Web\Microsoft.WebSite.Publishing.targets" />
+</Project>

@@ -1,0 +1,74 @@
+body
+{
+	margin: 0px;
+	background-image: url(../images/bg.png);
+	background-repeat: repeat-y;
+}
+.navi
+{
+	font-family: "微軟正黑體", "細明體", sans-serif;
+	color: #333;
+	font-weight: bold;
+	width: 200px;
+	height: 100%;
+	cursor: default;
+}
+.text00
+{
+	font: 14px;
+	font-family: "微軟正黑體", "細明體", sans-serif;
+}
+.open
+{
+	width: 200px;
+	height: 40px;
+	padding-left: 7px;
+	background-image: url(../images/open.png);
+	background-repeat: no-repeat;
+}
+.close
+{
+	width: 200px;
+	height: 40px;
+	padding-left: 7px;
+	background-image: url(../images/close.png);
+	background-repeat: no-repeat;
+}
+.open_items
+{
+	width: 170px;
+	height: 25px;
+	text-align: left;
+	padding-left: 25px;
+	background-color: #FFF;
+	background-image: url(../images/list.png);
+	background-repeat: no-repeat;
+	background-position: 13px center;
+}
+.open_items a 
+{	
+	color: #333;
+	font-size: 14px;
+	font-family: "微軟正黑體", "細明體", sans-serif;
+	text-decoration: none;
+    white-space:nowrap;
+}
+.open_items_hover
+{	
+	width: 170px;
+	text-align: left;
+	padding-left: 25px;
+	height: 25px;
+	background-color: #FFFFCC;
+	background-image: url(../images/list.png);
+	background-repeat: no-repeat;
+	background-position: 13px center;
+}
+.open_items_hover a
+{
+	color: #333;
+	font-size: 14px;
+	font-family: "微軟正黑體", "細明體", sans-serif;
+	text-decoration: none;
+    white-space:nowrap;
+}

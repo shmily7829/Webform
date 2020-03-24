@@ -1,0 +1,45 @@
+.back_1     {background-color: #B1CBCB}
+
+.input_1    {background-color: #E4E4E4; font-family: "Verdana", "Arial"; font-size: 9pt; color: #101063; line-height: 12pt}
+
+.table_1    {background-color: #008E94; border-color: #008E94}
+.table_2    {background-color: #E8F6FB}
+.table_3    {background-color: #D5D5D5; border-color: #D5D5D5}
+.table_4    {background-color: #EAEAEA; border: 1px solid #003C74; font-family: "Arial"; font-size: 12px; line-height: 18px; color: #5A5A5A; text-decoration: none}
+.table_5    {background-color: #FFFF80; border: 1px solid #FF0000; font-family: "Arial"; font-size: 12px; line-height: 18px; color: #FF0000; text-decoration: none}
+.table_6    {background-color: #F7E7E7; border: 1px solid #FF0000; font-family: "Arial"; font-size: 12px; line-height: 18px; color: #FF0000; text-decoration: none}
+.table_7    {background-color: #F7E7E7; border: 1px solid #00A516; font-family: "Arial"; font-size: 12px; line-height: 18px; color: #00A516; text-decoration: none}
+.table_8    {background-color: #0080FF; border: 1px solid #000000; font-family: "Arial"; font-size: 12px; line-height: 18px; color: #FFFFFF; text-decoration: none}
+.table_9    {background-color: #FFFFFF; border: 1px solid #ECECEC; font-family: "Arial"; font-size: 12px; line-height: 18px; color: #AAAAAA; text-decoration: none}
+.table_0    {background-color: #FF0000; border: 1px solid #000000; font-family: "Arial"; font-size: 12px; line-height: 18px; color: #FFFFFF; text-decoration: none}
+.table_A    {background-color: #B8B8B8; border: 1px solid #000000; font-family: "Arial"; font-size: 12px; line-height: 18px; color: #FFFFFF; text-decoration: none}
+
+.block_1    {background-color: #003C74; border-color: #003C74}
+.block_2    {background-color: #FEF3C9}
+
+.text_1     {font-family: "Verdana", "Arial"; font-size: 12px; line-height: 18px; color: #5A5A5A; text-decoration: none}
+.text_2     {font-family: "Verdana", "Arial"; font-size: 12px; line-height: 18px; color: #FF0000; text-decoration: none}
+
+.image_1    {cursor: hand}
+
+.button_1   {background-image: url('../images/calendar/btn_Face.gif'); background-repeat: no-Repeat; background-attachment: Fixed; background-position: Left Top; border: 1 solid #008E94; font-family: "Verdana", "Arial", "Helvetica", "sans-serif"; font-size: 9pt; color: 006699; width: 100px; height: 21px; line-height: 15pt}
+
+''back_1     : 日曆背景顏色
+''input_1    : 年、月選取欄位格式
+''table_1    : 日曆外框顏色
+''table_2    : 日曆底色
+''table_3    : 日曆日期部份外框
+''table_4    : 日期部份(一般狀態)
+''table_5    : 日期部份(選取狀態)
+''table_6    : 日期部份(星期日狀態)
+''table_7    : 日期部份(星期六狀態)
+''table_8    : 日期部份(系統當天日期狀態)
+''table_9    : 日期部份(非日期的空白狀態、非區間的日期狀態)
+''table_0    : 日期部份(假日狀態)
+''table_A    : 日期部份(選取日期狀態)
+''block_1    : 目前年月顯示框(外框)
+''block_2    : 目前年月顯示框(底色)
+''text_1     : 日期文字顏色(黑)
+''text_2     : 日期文字顏色(紅)
+''image_1    : 下方左、右箭頭圖示設定游標圖示
+''button_1   : 按鈕格式

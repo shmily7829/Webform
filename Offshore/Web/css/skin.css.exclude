@@ -1,0 +1,130 @@
+img {
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+}
+.log_in_tab {
+	width: 60%;
+	margin-right: auto;
+	margin-left: auto;
+	border: 1px solid #004165;
+	margin-top: 5%;
+	background-color: #FFF;
+}
+.log_in_tab_logo {
+	background-image: url(../images/logo.png);
+	background-repeat: no-repeat;
+	height: 90px;
+	width: 290px;
+	margin-right: auto;
+	margin-left: auto;
+}
+.log_in_tab_title {
+	background-image: url(../images/log_in_tab_title.png);
+	height: 40px;
+	background-repeat: repeat-x;
+	font-family: "微軟正黑體", "細明體", sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	color: #FFF;
+	padding-left: 5px;
+}
+.log_in_tab_title_left {
+	font-size: 18px;
+	display: block;
+	width: 320px;
+	margin-top: 6px;
+	margin-bottom: 0px;
+	float: left;
+}
+.log_in_tab_title_right {
+	display: block;
+	width: 70px;
+	float: right;
+	font-size: 12px;
+	margin-top: 20px;
+}
+.log_in_tab_content_title {
+	background-image: url(../images/log_in_tab_content_title.png);
+	background-repeat: no-repeat;
+	height: 50px;
+	background-position: center;
+}
+.log_in_tab_content_tab {
+	background-color: #f9f9f9;
+	width: 480px;
+	margin-right: auto;
+	margin-left: auto;
+	font-family: "微軟正黑體", "細明體", sans-serif;
+	font-size: 14px;
+	color: #333;
+	font-weight: bold;
+	border: 1px solid #e5e5e5;
+}
+.log_in_tab_content_tab_col1 {
+	width: 30%;
+	line-height: 50px;
+	text-align: center;
+	padding-right: 10px;
+	padding-left: 60px;
+}
+.log_in_tab_content_tab_col2 {
+	width: 30%;
+	line-height: 50px;
+	text-align: center;
+	padding-right: 10px;
+	padding-left: 60px;
+}
+.log_in_tab_content_tab_text {
+	border: 1px solid #333;
+	width: 80%;
+	margin-left: 10px;
+	height: 22px;
+}
+.btn_log {
+	background-image: url(../images/log_in.png);
+	background-repeat: no-repeat;
+	height: 40px;
+	width: 120px;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	margin-top: 10px;
+	margin-bottom: 7px;
+}
+.btn_log:hover {
+	background-image: url(../images/log_in_hover.png);
+}
+.btn_clear {
+	background-image: url(../images/clear.png);
+	background-repeat: no-repeat;
+	height: 40px;
+	width: 120px;
+	margin-top: 10px;
+	margin-bottom: 7px;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+}
+.btn_clear:hover {
+	background-image: url(../images/clear_hover.png);
+}
+.log_in_tab_content_footer {
+	background-image: url(../images/log_in_tab_footer.png);
+	background-repeat: no-repeat;
+	height: 30px;
+	background-position: center;
+}
+.log_in_tab_footer {
+	height: 20px;
+	text-align: center;
+	font-family: "微軟正黑體", "細明體", sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+	background-color: #005280;
+	padding-top: 3px;
+	color: #FFF;
+}

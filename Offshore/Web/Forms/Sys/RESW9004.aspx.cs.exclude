@@ -1,0 +1,483 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using Vista.DataAccess;
+using Vista.Information;
+
+public partial class RESW9004 : basePage
+{
+    #region 定義變數
+
+    public enum ModeType { Query, AddNew, Modify };
+
+    public ModeType Mode
+    {
+        get
+        {
+            return (ModeType)ViewState["Mode"];
+        }
+        set
+        {
+            ViewState["Mode"] = value;
+        }
+    }
+
+    #endregion
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            InitialForm();
+            SetPlatform(ModeType.Query);
+        }
+    }
+
+    #region Button Function
+
+    //查詢
+    protected void btnQry_Click(object sender, EventArgs e)
+    {
+        if (Query())
+        {
+            DataListLoad();
+        }
+    }
+
+    //核准
+    protected void btnApprove_Click(object sender, EventArgs e)
+    {
+        if (Approve())
+        {
+            SetPlatform(ModeType.Query);
+
+            DataListLoad();
+        }
+    }
+
+    //退件
+    protected void btnReject_Click(object sender, EventArgs e)
+    {
+        if (Reject())
+        {
+            SetPlatform(ModeType.Query);
+
+            DataListLoad();
+        }
+    }
+
+    //取消
+    protected void btnCancel_Click(object sender, EventArgs e)
+    {
+        SetPlatform(ModeType.Query);
+
+        DataListLoad();
+    }
+
+    //審閱
+    protected void rplbtnReview_Click(object sender, EventArgs e)
+    {
+        RepeaterItem rp_item = ((sender as Button).NamingContainer) as RepeaterItem;
+
+        string iType = ((Label)rp_item.FindControl("rplbType")).Text;
+        string iValue = ((Label)rp_item.FindControl("rplbValue")).Text;
+
+        if (View(iType, iValue))
+            SetPlatform(ModeType.Modify);
+        else
+            DataListLoad();
+    }
+
+    #endregion        
+
+    #region DataList Function
+
+    protected void repDataList_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+
+    }
+
+    protected void ucDataGridView1_ChangePageClick(int _OffsetCount, int _FetchCount)
+    {
+        string Type = ddlqType.SelectedValue;
+        string Value = txtqValue.Text.Trim();
+        string Text = txtqText.Text.Trim();
+
+        SystemCodeDB myDB = new SystemCodeDB(base.strUserID, base.FormID);
+
+        DataTable dt = myDB.getSystemCode(Type, Value, Text, SystemCodeDB.SelectType.Query, SystemCodeDB.WorkType.Checker, _OffsetCount, _FetchCount);
+
+        repDataListBind(dt);
+    }
+
+    public void DataListLoad()
+    {
+        SystemCodeDB myDB = new SystemCodeDB(base.strUserID, base.FormID);
+
+        string Type = ddlqType.SelectedValue;
+        string Value = txtqValue.Text.Trim();
+        string Text = txtqText.Text.Trim();
+
+        #region 依查詢條件取得總筆數
+
+        int TotalCount = 0;
+
+        DataTable CountDt = myDB.getSystemCode(Type, Value, Text, SystemCodeDB.SelectType.Count, SystemCodeDB.WorkType.Checker);
+
+        if (CountDt.Rows.Count > 0 && CountDt != null)
+        {
+            DataRow CountDr = CountDt.Rows[0];
+
+            TotalCount = Convert.ToInt32(CountDr["ROW_COUNT"]);
+        }
+        #endregion
+
+        ucDataGridView1._TotalCount = TotalCount;
+        ucDataGridView1.ToFirst();
+    }
+
+    protected void repDataListBind(DataTable dt)
+    {
+        if (dt.Rows.Count > 0)
+        {
+            plShowEmpty.Visible = false;
+            plShowList.Visible = true;
+        }
+        else
+        {
+            plShowEmpty.Visible = true;
+            plShowList.Visible = false;
+        }
+
+        repDataList.DataSource = dt;
+        repDataList.DataBind();
+    }
+
+    #endregion
+
+    #region 自訂Function
+
+    /// <summary>
+    /// 設定畫面顯示
+    /// </summary>
+    /// <param name="iMode">畫面狀態</param>
+    public void SetPlatform(ModeType iMode)
+    {
+        Mode = iMode;
+        switch (Mode)
+        {
+            case ModeType.Query:
+                plQuery.Visible = true;
+                plList.Visible = true;
+                plDetails.Visible = false;
+
+                QueryFocus();
+
+                break;
+
+            case ModeType.AddNew:
+                plQuery.Visible = false;
+                plList.Visible = false;
+                plDetails.Visible = true;
+
+                AddNewFocus();
+                InitialAddNew();
+
+                break;
+
+            case ModeType.Modify:
+                plQuery.Visible = false;
+                plList.Visible = false;
+                plDetails.Visible = true;
+
+                ModifyFocus();
+                InitialModify();
+
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 將 info 的值填入到 UI 中
+    /// </summary>
+    /// <param name="info"></param>
+    private void FillModFieldValue(SystemCodeBufInfo iInfo)
+    {
+        //for 資料狀態
+        lbModItem.Text = (iInfo.MODItem == "I") ? "新增"
+            : (iInfo.MODItem == "U") ? "修改"
+            : (iInfo.MODItem == "D") ? "刪除"
+            : iInfo.MODItem;
+
+        //data fields
+        txtiType.Text = iInfo.Type;
+        txtiValue.Text = iInfo.Value;
+        txtiText.Text = iInfo.Text;
+        txtiDisplayOrder.Text = iInfo.DisplayOrder.ToString();
+        txtiValue2.Text = iInfo.Value2;
+        txtiRemarks.Text = iInfo.REMARKS;
+    }
+
+    protected void BindSystemCodeType(DropDownList ddl)
+    {
+        SystemCodeDB myDB = new SystemCodeDB(base.strUserID, base.FormID);
+
+        DataTable Dt = myDB.getSystemCode_distinct();
+
+        ddlqType.DataSource = Dt;
+        ddlqType.DataValueField = "type";
+        ddlqType.DataTextField = "type";
+        ddlqType.DataBind();
+        ddlqType.Items.Insert(0, new ListItem("請選擇", ""));
+    }
+
+    #endregion
+
+    #region Initial Function
+
+    //作業平台欄位值初始化
+    protected void InitialForm()
+    {
+        BindSystemCodeType(ddlqType);
+    }
+
+    //作業平台欄位值初始化(AddNew)
+    protected void InitialAddNew()
+    {
+
+    }
+
+    //作業平台欄位值初始化(Modify)
+    protected void InitialModify()
+    {
+
+    }
+
+    #endregion
+
+    #region Focus Function
+
+    // 查詢 Focus 欄位
+    protected void QueryFocus()
+    {
+
+    }
+
+    //新增 Focus 欄位
+    protected void AddNewFocus()
+    {
+
+    }
+
+    //更新 Focus 欄位
+    protected void ModifyFocus()
+    {
+
+    }
+
+    #endregion
+
+    #region 欄位檢核
+
+    //按下查詢按鈕(欄位檢核)
+    protected bool Query()
+    {
+        return true;
+    }
+
+    //按下審閱按鈕
+    protected bool View(string Type, string Value)
+    {
+        SystemCodeDB myDB = new SystemCodeDB(base.strUserID, base.FormID);
+
+        //是否在Buffer資料中，且StepID = 20
+        bool IsExistBuffer = myDB.chkSystemCode(Type, Value, SystemCodeDB.TableType.Buffer, "INCHECKER");
+
+        if (IsExistBuffer)
+        {
+            SystemCodeBufInfo iInfo = new SystemCodeBufInfo();
+
+            myDB.LoadSystemCodeBuff(Type, Value, out iInfo);
+
+            FillModFieldValue(iInfo);
+
+            return true;
+        }
+        else
+        {
+            base.DoAlertinAjax(this, "SAVE", "該筆資料可能已被核准或退件，請重新查詢。");
+            return false;
+        }
+    }
+
+    #endregion
+
+    #region 異動處理
+
+    /// <summary>
+    /// 資料核准
+    /// </summary>
+    /// <returns></returns>
+    protected bool Approve()
+    {
+        SystemCodeDB myDB = new SystemCodeDB(base.strUserID, base.FormID);
+
+        string iType = txtiType.Text.Trim();
+        string iValue = txtiValue.Text.Trim();
+
+        try
+        {
+            SystemCodeBufInfo iInfo;
+            SystemCodeInfo DataInfo = new SystemCodeInfo();
+            SystemCodeLogInfo LogInfo = new SystemCodeLogInfo();
+
+            if (myDB.LoadSystemCodeBuff(iType, iValue, out iInfo))
+            {
+                if (iInfo.StepID != "20")
+                {
+                    base.DoAlertinAjax(this, "SAVE", "該資料已被覆核或退件!");
+                    return false;
+                }
+
+                #region 填入正式資料
+
+                DataInfo.Type = iInfo.Type;
+                DataInfo.Value = iInfo.Value;
+                DataInfo.Text = iInfo.Text;
+                DataInfo.DisplayOrder = iInfo.DisplayOrder;
+                DataInfo.Value2 = iInfo.Value2;
+                DataInfo.REMARKS = iInfo.REMARKS;
+                DataInfo.Maker = iInfo.Maker;
+                DataInfo.Maker_Time = iInfo.Maker_Time;
+                DataInfo.Checker = base.strUserID;
+                DataInfo.Checker_Time = DateTime.Now;
+
+                #endregion
+
+                #region 填入Log
+
+                LogInfo.Type = iInfo.Type;
+                LogInfo.Value = iInfo.Value;
+                LogInfo.Text = iInfo.Text;
+                LogInfo.DisplayOrder = iInfo.DisplayOrder;
+                LogInfo.Value2 = iInfo.Value2;
+                LogInfo.REMARKS = iInfo.REMARKS;
+                LogInfo.MODItem = iInfo.MODItem;
+                LogInfo.Maker = iInfo.Maker;
+                LogInfo.Maker_Time = iInfo.Maker_Time;
+                LogInfo.Checker = base.strUserID;
+                LogInfo.Checker_Time = DateTime.Now;
+
+                #endregion
+
+                #region 交易處理
+
+                using (DbTransaction myTransaction = myDB.GetDbTransaction(myDB.CreateConnection()))
+                {
+                    try
+                    {
+                        #region 處理正式資料
+
+                        switch (iInfo.MODItem)
+                        {
+                            case "I":
+                                myDB.InsSystemCode(DataInfo, myTransaction);
+                                break;
+
+                            case "U":
+                                myDB.UpdSystemCode(DataInfo, myTransaction);
+                                break;
+
+                            case "D":
+                                myDB.DelSystemCode(DataInfo, myTransaction);
+                                break;
+                        }
+
+                        #endregion
+
+                        //新增Log資料
+                        myDB.InsSystemCodeLog(LogInfo, myTransaction);
+
+                        //刪除Buffer資料
+                        myDB.DelSysteCodeBuff(iInfo, myTransaction);
+
+                        if (myTransaction != null)
+                            myTransaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        if (myTransaction != null)
+                            myTransaction.Rollback();
+
+                        throw new Exception(ex.Message);
+                    }
+                }
+
+                #endregion
+
+                base.DoAlertinAjax(this, "SAVE", "核准完成!");
+                return true;
+            }
+            else
+            {
+                base.DoAlertinAjax(this, "SAVE", "該資料已被覆核或退件!");
+                return false;
+            }            
+        }
+        catch (Exception ex)
+        {
+            base.DoAlertinAjax(this, "SAVE", "作業發生錯誤，錯誤訊息:" + ex.Message);
+            return false;
+        }        
+    }
+
+    /// <summary>
+    /// 資料退件
+    /// </summary>
+    /// <returns></returns>
+    protected bool Reject()
+    {
+        SystemCodeDB myDB = new SystemCodeDB(base.strUserID, base.FormID);
+
+        string iType = txtiType.Text.Trim();
+        string iValue = txtiValue.Text.Trim();
+
+        try
+        {
+            SystemCodeBufInfo iInfo;
+
+            if (myDB.LoadSystemCodeBuff(iType, iValue, out iInfo))
+            {
+                if (iInfo.StepID != "20")
+                {
+                    base.DoAlertinAjax(this, "SAVE", "該資料已被覆核或退件!");
+                    return false;
+                }
+
+                iInfo.StepID = "10";
+
+                myDB.UpdSystemCodeBuff(iInfo);
+
+                base.DoAlertinAjax(this, "SAVE", "退件完成!");
+                return true;
+            }
+            else
+            {
+                base.DoAlertinAjax(this, "SAVE", "該資料已被覆核或退件!");
+                return false;
+            }
+        }
+        catch (Exception ex)
+        {
+            base.DoAlertinAjax(this, "SAVE", "作業發生錯誤，錯誤訊息:" + ex.Message);
+            return false;
+        }        
+    }
+
+    #endregion            
+}

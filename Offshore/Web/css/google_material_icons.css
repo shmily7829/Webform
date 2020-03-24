@@ -1,0 +1,30 @@
+﻿/* fallback */
+/* https://fonts.gstatic.com/s/materialicons/v31  */
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;  
+  src: url(google_material_icons.eot); /* For IE6-8 */
+  src: local('Material Icons'),       
+       url(google_material_icons.woff) format('woff'),
+       url(google_material_icons.woff2) format('woff2');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';            /* Support for IE. */
+  -webkit-font-smoothing: antialiased;      /* Support for all WebKit browsers. */
+  text-rendering: optimizeLegibility;       /* Support for Safari and Chrome. */
+  -moz-osx-font-smoothing: grayscale;       /* Support for Firefox. */
+}

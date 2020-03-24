@@ -1,0 +1,1246 @@
+﻿HTML {
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    background-color: #ffffff;
+    color: #333333;
+    font-family: "Verdana", "細明體";
+    font-size: x-small;
+    border: none;
+}
+
+BODY {
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    background-color: #F8F4F2;
+    color: #333333;
+    font-family: "Verdana", "細明體";
+    font-size: small;
+    border: none;
+}
+
+/*背景圖-漸層粉*/
+.Bg {
+    background-image: url( '../images/canvas.gif' );
+}
+
+/*背景色-粉*/
+.PinkBg {
+    background-color: #FDCBCB;
+    text-align: center;
+}
+
+/*背景色-淡橘*/
+.BlueBg {
+    background-color: #FFB18D;
+    text-align: center;
+}
+
+/*背景圖-TopFrame*/
+.TitleBg {
+    /*background-color: #B80019; /*紅色系*/ /*background-color: #B80019; /*紅藍系*/ /*background-color:#4C71B8; /*藍色系*/
+    background-color: #ABCB3A; /*綠藍系*/ /*background-image: url(   '../images/background.png' );*/
+}
+
+.SystemBar {
+    background-image: url( '../images/Logo_Left.png' );
+    background-repeat: no-repeat;
+    background-color: #0072AA; /*filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=1, StartColorStr=#37AB4D, EndColorStr=#0164A6);	*/
+}
+
+.SystemBarBg {
+    background-image: url( '../images/TitleBg.gif' );
+}
+
+
+.btnTree {
+    height: 26px;
+    background-image: url( '../images/TreeBtn.jpg' );
+    background-repeat: no-repeat;
+    padding-left: 28px;
+}
+
+.btnTreeHover {
+    height: 26px;
+    background-image: url( '../images/TreeBtn2.jpg' );
+    background-repeat: no-repeat;
+    padding-left: 28px;
+}
+
+.TreeItem {
+    height: 28px;
+    padding-left: 20px;
+    border: solid 1px #EEEEEE;
+    color: black;
+    font-size: 9px;
+}
+
+.TreeItemHover {
+    height: 28px;
+    padding-left: 20px;
+    border: solid 1px #EEEEEE;
+    color: #FF4D00;
+    font-size: 9px;
+}
+
+/*登入Table用-深藍Border*/
+.SystemTable {
+    font-family: "Verdana", "細明體";
+    font-size: x-small;
+    text-align: left;
+    border-left: 1px;
+    border-right: 1px;
+    border-bottom: 0px;
+    border-top: 0px;
+    border: 1px solid #0164A6;
+}
+
+/*double Table用-粉*/
+.DoubleTable {
+    font-family: "Verdana", "細明體";
+    font-size: x-small;
+    text-align: left;
+    border-left: 1px;
+    border-right: 1px;
+    border-bottom: 0px;
+    border-top: 0px;
+    border: 6px double #DA031C;
+}
+
+
+/*主要Table 內容 (灰底-寬100%)*/
+.MainTable {
+    width: 100%;
+    text-align: left;
+    letter-spacing: 1px;
+    background-color: #F4F4F4;
+    line-height: 25px;
+}
+
+
+/*主要Table 內容 (灰底-寬99%)*/
+.Table99 {
+    width: 99%;
+    text-align: left;
+    letter-spacing: 1px;
+    background-color: #F4F4F4;
+    line-height: 18px;
+}
+
+/*標題用- 粉紅區塊 */
+table td.Tab {
+    font-size: 13px;
+    color: #ffffff;
+    font-family: "Arial";
+    white-space: nowrap;
+    background-color: #FF9A9C;
+}
+
+/*TD*/
+
+.igg_Header {
+    background-color: #6EA3CC;
+    background-repeat: repeat-x;
+    background-image: url(../ig_res/Default/images/igg_header.gif);
+    height: 20px;
+    color: Black;
+}
+
+/*TD*/
+
+.igg_Header2 {
+    background-color: #6EA3CC;
+    background-repeat: repeat-x;
+    background-image: url(../ig_res/Default/images/igg_header2.gif);
+    height: 20px;
+    color: Black;
+}
+
+/*TD*/
+
+.igg_Header3 {
+    background-color: #6EA3CC;
+    background-repeat: repeat-x;
+    background-image: url(../ig_res/Default/images/igg_header3.gif);
+    height: 20px;
+    color: Black;
+}
+
+/*TD*/
+
+.igg_Header4 {
+    background-color: #488556;
+    background-repeat: repeat-x;
+    background-image: url(../ig_res/Default/images/igg_header4.gif);
+    height: 20px;
+    color: White;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.igg_Item {
+    background-color: White;
+    padding: 5px 8px 5px 8px;
+    overflow: hidden;
+    height: 20px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+
+.TD_Head_100 {
+    width: 100px;
+    background-color: #E0E0E0;
+    border-color: #E7EFEF;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 12pt;
+    color: black;
+}
+
+.TD_Head_Auto {
+    width: auto;
+    background-color: #E0E0E0;
+    border-color: #E7EFEF;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 12pt;
+    color: black;
+}
+
+.TD_Content_Auto {
+    width: auto;
+    background-color: #FFFFFF;
+    border-color: #E7EFEF;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 12pt;
+    color: black;
+}
+
+.TD_sHead {
+    width: auto;
+    font-weight: bold;
+    background-color: #996666;
+    border-color: #E7EFEF;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 12pt;
+    color: #ffffff;
+}
+
+.TD_Head {
+    width: 20%;
+    font-weight: bold;
+    background-color: #996666;
+    border-color: #E7EFEF;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 12pt;
+    color: #ffffff;
+}
+
+.TD_Content {
+    width: 79%;
+    background-color: #FFF7FC;
+    border-color: #FFFFCC;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 12pt;
+    color: #000000;
+}
+
+.TD_sContent {
+    width: auto;
+    background-color: #FFF7FC;
+    border-color: #FFFFCC;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 12pt;
+    color: #000000;
+}
+
+/*GridView*/
+.gv {
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 12pt;
+    color: #000000;
+}
+
+.gv_test {
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 15pt;
+    color: #000000;
+}
+
+.gv_empty {
+    border-collapse: collapse;
+    font-size: 12pt;
+    color: #808080;
+    border: 1px solid #CC3300;
+}
+
+.gv_header {
+    background-color: #1B1B1B; /*background-color: #32CD32;*/
+    border-color: #E7EFEF;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 12pt;
+    color: #ffffff;
+    text-align: center;
+}
+
+.gv_row {
+    background-color: #FFFFFF;
+    border-color: #FEFFF0;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 12pt;
+    color: #000000;
+}
+
+.gv_row_b {
+    background-color: #E8E8E8;
+    border-color: #FEFFF0;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 12pt;
+    color: #000000;
+}
+
+.gv_row_a {
+    background-color: #FFFBEE;
+    border-color: #FFFFFF;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 12pt;
+    color: #000000;
+}
+
+.gv_pager {
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 12pt;
+    color: #330000;
+}
+
+/*漸層色按鈕 (粉紅底 紅框) */
+.Button_MouseOut {
+    border-right: #A30803 1px solid;
+    padding-right: 2px;
+    border-top: #A30803 1px solid;
+    padding-left: 2px;
+    font-size: 12px; /*filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#FFFFFF, EndColorStr=#005D8B);*/
+    background-color: #005D8B;
+    border-left: #A30803 1px solid;
+    cursor: hand;
+    color: #FFFFFF;
+    padding-top: 2px;
+    border-bottom: #A30803 1px solid;
+}
+
+.Button_MouseOver {
+    border-right: #AA0109 1px solid;
+    padding-right: 2px;
+    border-top: #AA0109 1px solid;
+    padding-left: 2px;
+    font-size: 12px;
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#FFFFFF, EndColorStr=#005D8B);
+    border-left: #AA0109 1px solid;
+    cursor: hand;
+    color: #FFFFFF;
+    padding-top: 2px;
+    border-bottom: #AA0109 1px solid;
+}
+
+.Button_MouseUp {
+    border-right: #AA0109 1px solid;
+    padding-right: 2px;
+    border-top: #AA0109 1px solid;
+    padding-left: 2px;
+    font-size: 12px;
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#FFFFFF, EndColorStr=#005D8B);
+    border-left: #AA0109 1px solid;
+    cursor: hand;
+    color: #FFFFFF;
+    padding-top: 2px;
+    border-bottom: #AA0109 1px solid;
+}
+
+.Button_MouseDown {
+    border-right: #AA0109 1px solid;
+    padding-right: 2px;
+    border-top: #AA0109 1px solid;
+    padding-left: 2px;
+    font-size: 12px; /*filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#FFDFDF);*/
+    background-color: #005D8B;
+    border-left: #AA0109 1px solid;
+    cursor: hand;
+    color: #FFFFFF;
+    padding-top: 2px;
+    border-bottom: #AA0109 1px solid;
+}
+
+.Button_MouseDown_lightblue {
+    border-right: #AA0109 1px solid;
+    padding-right: 2px;
+    border-top: #AA0109 1px solid;
+    padding-left: 2px;
+    font-size: 12px; /*filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#FFDFDF);*/
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#55A8FF);
+    border-left: #AA0109 1px solid;
+    cursor: hand;
+    color: #FFFFFF;
+    padding-top: 2px;
+    border-bottom: #AA0109 1px solid;
+}
+
+
+.btn_mouseout {
+    border-right: #A30803 1px solid;
+    padding-right: 2px;
+    border-top: #FFFFFF 1px solid;
+    padding-left: 2px;
+    font-size: 12px;
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#FFFFFF, EndColorStr=#FDCBCB);
+    border-left: #A30803 1px solid;
+    cursor: hand;
+    color: black;
+    padding-top: 2px;
+    border-bottom: #A30803 1px solid;
+}
+
+.btn_mouseover {
+    border-right: #AA0109 1px solid;
+    padding-right: 2px;
+    border-top: #AA0109 1px solid;
+    padding-left: 2px;
+    font-size: 12px;
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#E61818);
+    border-left: #AA0109 1px solid;
+    cursor: hand;
+    color: black;
+    padding-top: 2px;
+    border-bottom: #AA0109 1px solid;
+}
+
+.btn_mouseup {
+    border-right: #AA0109 1px solid;
+    padding-right: 2px;
+    border-top: #AA0109 1px solid;
+    padding-left: 2px;
+    font-size: 12px;
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#FFDFDF);
+    border-left: #AA0109 1px solid;
+    cursor: hand;
+    color: black;
+    padding-top: 2px;
+    border-bottom: #AA0109 1px solid;
+}
+
+.btn_mousedown {
+    border-right: #AA0109 1px solid;
+    padding-right: 2px;
+    border-top: #AA0109 1px solid;
+    padding-left: 2px;
+    font-size: 12px;
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#FFDFDF);
+    border-left: #AA0109 1px solid;
+    cursor: hand;
+    color: black;
+    padding-top: 2px;
+    border-bottom: #AA0109 1px solid;
+}
+
+.btn_mousedown_silver {
+    border-right: #000000 1px solid;
+    padding-right: 2px;
+    border-top: #000000 1px solid;
+    padding-left: 2px;
+    font-size: 12px;
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#E6E8FA);
+    border-left: #000000 1px solid;
+    cursor: hand;
+    color: black;
+    padding-top: 2px;
+    border-bottom: #000000 1px solid;
+}
+
+/*上下框線*/
+.LineImg {
+    height: 17px;
+    text-align: center;
+}
+
+/*左右灰線*/
+.LeftRightLine {
+    border: 1px solid #cccccc;
+    border-bottom: 0px;
+    border-top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*左右紫紅線*/
+.LeftRightLine2 {
+    border: 1px solid #bf2a6b;
+    border-bottom: 0px;
+    border-top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*白字*/
+.text00 {
+    font-size: 13px;
+    color: #ffffff;
+    font-family: "Verdana", "細明體";
+}
+
+/*灰白字*/
+.text01 {
+    font-size: 13px;
+    color: #E8F3FB;
+    font-family: "Verdana", "細明體";
+    font-weight: bold;
+}
+
+/*藍字*/
+.text02 {
+    font-size: 13px;
+    color: #437ED4;
+    font-family: "Verdana", "細明體";
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+/*深藍字*/
+.text03 {
+    font-size: 13px;
+    color: #0000A5;
+    font-family: "Verdana", "細明體";
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+/*紅字*/
+.text04 {
+    font-size: 13px;
+    color: #E10000;
+    font-family: "Verdana", "細明體";
+    font-weight: bold;
+}
+
+/*灰字*/
+.text05 {
+    font-size: 13px;
+    color: #000000;
+    font-family: "Verdana", "細明體";
+    font-weight: bold;
+}
+
+/*黑字*/
+.text06 {
+    font-size: 13px;
+    color: black;
+    font-family: "Verdana", "細明體";
+}
+
+/*TextBox Right*/
+.align_Right {
+    text-align: right;
+}
+
+/*Pink Hue TextBox */
+.TextBox_Pink {
+    background-color: #FFFCFC;
+    border: 1px solid #FDCBCB;
+    padding: 1;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 12pt;
+    color: #0B0B0B;
+    line-height: 12pt;
+}
+
+.text_BG {
+    background-color: #FFFFCC;
+}
+
+.text_BG2 {
+    background-color: #FFCCCC;
+}
+
+.text_BG3 {
+    background-color: #FFCCFF;
+}
+
+.text_BG4 {
+    background-color: #CCCCFF;
+}
+
+.text_BG5 {
+    background-color: #CCFFFF;
+}
+
+.text_BG6 {
+    background-color: #CCFFCC;
+}
+
+/*Images基本樣式 */
+.img {
+    border: 0px;
+    vertical-align: middle;
+    border-style: none;
+    margin-right: 2px;
+}
+
+.imgBtn {
+    cursor: pointer;
+}
+
+
+/* ==========以下 TreeView 使用========== */
+
+/*定選單寬度*/
+.menu_d {
+    margin-top: 0px;
+    margin-right: 12px;
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+
+.menu {
+    font-size: 12px;
+}
+
+
+    .menu a {
+        display: block;
+        color: #333333;
+        text-decoration: none;
+        font-size: 12px;
+        padding: 8px;
+    }
+
+
+    /*主選單*/
+    .menu td.mainnav {
+        border-top-width: 0px;
+        border-bottom-width: 0px;
+        border-top-style: solid;
+        border-bottom-style: solid;
+        border-top-color: #FFFFFF;
+        border-bottom-color: #CCCCCC;
+        font-weight: bold; /*filter: progid:dximagetransform.microsoft.gradient(startcolorstr=  '#ffffff' , endcolorstr= '#FFFCD3' , gradienttype= '0');*/
+        filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#FFFFFF, EndColorStr=#FFFCD3);
+    }
+
+
+
+    /*次選單*/
+    .menu td.subnav {
+        text-indent: 0px;
+    }
+
+    .menu a:hover {
+        color: #FFFFFF;
+        background-color: #E91111;
+    }
+
+/* ==========以上 TreeView 使用========== */
+
+
+
+/* ==========以下 BankingSkin========== */
+
+/*TextBox */
+.minTextBox {
+    width: 60px;
+    background-color: #FFFCFC;
+    border: 1px solid #484848;
+    padding: 1;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 12pt;
+    color: #0B0B0B;
+    line-height: 12pt;
+}
+
+/*深灰字*/
+.skText {
+    font-size: 11px;
+    color: #383838;
+    font-family: "Verdana", "細明體";
+}
+
+.NskTextBold /**2012/6/29 新增**/ {
+    font-size: 13px;
+    color: #383838;
+    font-family: "Verdana", "細明體";
+    font-weight: bold;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.skTextBold {
+    font-size: 13px;
+    color: Black;
+    font-family: "Verdana", "細明體";
+    font-weight: bold;
+}
+/*Gary Hue TextBox */
+.NskTextBox /**2012/6/29 新增**/ {
+    width: 110px;
+    background-color: #FFFCFC;
+    border: 1px dashed #484848;
+    /**padding: 1;**/
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 12pt;
+    color: #333;
+    line-height: 12pt;
+}
+
+.skTextBox {
+    font-size: 13px;
+    color: #383838;
+    font-family: "Verdana", "細明體";
+    font-weight: bold;
+    /*width: 110px;
+    background-color: #C6E9EA;
+    border: 1px solid;
+    border-color: white;
+    padding: 1;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 12pt;
+    color: #004165;
+    line-height: 12pt;*/
+}
+
+.skTextBoxFull {
+    width: 95%;
+    background-color: #FFB18D;
+    border: 1px solid;
+    border-color: white;
+    padding: 1;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 12pt;
+    color: #0B0B0B;
+    line-height: 12pt;
+}
+/*Gary Hue DropDownList */
+.NskDropDownList /**2012/6/29 新增**/ {
+    background-color: #FFFCFC;
+    border: 1px solid #484848;
+    padding: 1;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 12pt;
+    color: #0B0B0B;
+    line-height: 16pt;
+}
+
+.skDropDownList {
+    background-color: #C6E9EA;
+    border: 1px solid #484848;
+    padding: 1;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    font-size: 12pt;
+    color: #004165;
+    line-height: 12pt;
+}
+
+/* ==========以上 Banking用Skin========== */
+
+
+
+
+/* ===========Banking新樣式(Try)============ */
+.btnLogon {
+    border: #0043A6 1px solid;
+    padding-right: 2px;
+    padding-left: 2px;
+    font-size: 12px; /*filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#FFFFFF, EndColorStr=#005D8B);*/
+    background-color: #FFFFFF;
+    cursor: hand;
+    color: black;
+    padding-top: 2px;
+    width: 100px;
+    height: 30px;
+}
+
+.ms-formlabel {
+    /**width: 10%;
+    border-top: #d8d8d8 1px solid;
+    font-weight: bold;
+    font-size: 9pt;
+    padding-bottom: 6px;
+    color: #525252;
+    padding-top: 3px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    **/
+    width: 10%; /*padding-right: 8px;*/
+    font-size: 12pt;
+    /*border: #669999 1px dotted;*/
+    font-weight: bold;
+    padding: 3px 0px 3px 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    /*color: #003366;
+    background-color: #e7efef;*/
+}
+
+.ms-formlabel-center {
+    width: 10%; /*padding-right: 8px;*/
+    /*border: #669999 1px dotted;*/
+    /**font-weight: bold;**/
+    font-weight: normal;
+    font-size: 12pt;
+    /**padding-bottom: 6px;**/
+    padding: 3px 0px 3px 5px;
+    /*color: #003366;*/
+    /**padding-top: 3px;**/
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    /*background-color: #e7efef;*/
+}
+
+.ms-formlabel-left {
+    width: 10%; /*padding-right: 8px;*/
+    /*border: #669999 1px dotted;*/
+    font-weight: normal;
+    font-size: 12pt;
+    /**padding-bottom: 6px;**/
+    /*color: #003366;*/
+    padding: 3px 0px 3px 5px;
+    /**padding-top: 3px;**/
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    /*background-color: #e7efef;*/
+}
+
+.ms-formlabel-left-ucformfield {
+    width: 40%; /*padding-right: 8px;*/
+    /*border: #669999 1px dotted;*/
+    font-weight: normal;
+    font-size: 12pt;
+    /**padding-bottom: 6px;**/
+    /*color: #003366;*/
+    padding: 3px 0px 3px 5px;
+    /**padding-top: 3px;**/
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    /*background-color: #e7efef;*/
+}
+
+.ms-formlabel-left2 {
+    width: 10%; /*padding-right: 8px;*/
+    /*border-top: #d8d8d8 1px solid;*/
+    font-weight: bold;
+    font-size: 12pt;
+    border: #669999 1px dotted;
+    font-weight: normal; /**padding-bottom: 6px;
+    padding-top: 3px;
+    
+    **/
+    /*color: #003366;*/
+    /*background-color: #e7efef;*/
+    padding: 3px 5px 3px 0;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+}
+
+.ms-formlabel-right {
+    width: 10%; /*padding-right: 8px;*/
+    /*border-top: #d8d8d8 1px solid;*/
+    font-weight: bold;
+    font-size: 12pt;
+    border: #669999 1px dotted;
+    font-weight: normal; /**padding-bottom: 6px;
+    padding-top: 3px;
+    
+    **/
+    /*color: #003366;
+    background-color: #e7efef;*/
+    padding: 3px 5px 3px 0;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: right;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+}
+
+.ms-formbody {
+    padding-right: 6px;
+    /*border-top: #669999 1px dotted;
+    border-right: #669999 1px dotted;
+    border-bottom: #669999 1px dotted;*/
+    padding-left: 6px;
+    font-size: 12pt;
+    /**background: #CCCCCC;**/
+    padding-bottom: 4px;
+    padding-top: 3px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+}
+
+.FormTitle {
+    color: #FFFFFF;
+    font-size: 12pt;
+    text-align: center;
+    background-image: url(../images/form_title.png);
+    background-repeat: repeat-x;
+    background-color: Black;
+    font-weight: bold;
+    height: 25px;
+    letter-spacing: 2pt; /*filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#02507C, EndColorStr=#ABCB3A);*/
+}
+
+/*超連結樣式*/
+
+
+/*文字連結效果1 藍-->白 */
+A.link-01-item:link {
+    font-size: 13px;
+    color: #0000A5;
+    line-height: 12px;
+    font-family: "Verdana", "Tohoma", "Helvetica", "sans-serif";
+    text-decoration: none;
+    line-height: 25px;
+    word-spacing: 1px;
+}
+
+A.link-01-item:visited {
+    font-size: 13px;
+    color: #0000A5;
+    line-height: 16px;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    text-decoration: none;
+    line-height: 25px;
+    word-spacing: 5px;
+}
+
+A.link-01-item:hover {
+    font-size: 13px;
+    color: #2F502A;
+    line-height: 16px;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    text-decoration: none;
+    line-height: 25px;
+    word-spacing: 5px;
+}
+
+/*文字連結效果5 白-->灰 */
+A.link-05-item:link {
+    font-size: 12px;
+    color: #FFFFFF;
+    line-height: 12px;
+    font-family: "Verdana", "Tohoma", "Helvetica", "sans-serif";
+    text-decoration: none;
+    line-height: 25px;
+    word-spacing: 1px;
+}
+
+A.link-05-item:visited {
+    font-size: 13px;
+    color: #FFFFFF;
+    line-height: 16px;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    text-decoration: none;
+    line-height: 25px;
+    word-spacing: 5px;
+}
+
+A.link-05-item:hover {
+    font-size: 13px;
+    color: #E3E3E3;
+    line-height: 16px;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    text-decoration: none;
+    line-height: 25px;
+    word-spacing: 5px;
+}
+
+/*文字連結效果1 藍-->綠 */
+A.link-02-item:link {
+    font-size: 13px;
+    color: #0000A5;
+    line-height: 12px;
+    font-family: "Verdana", "Tohoma", "Helvetica", "sans-serif";
+    text-decoration: none;
+    line-height: 25px;
+    word-spacing: 1px;
+}
+
+A.link-02-item:visited {
+    font-size: 13px;
+    color: #0000A5;
+    line-height: 16px;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    text-decoration: none;
+    line-height: 25px;
+    word-spacing: 5px;
+}
+
+A.link-02-item:hover {
+    font-size: 13px;
+    color: #008765;
+    line-height: 16px;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    text-decoration: none;
+    line-height: 25px;
+    word-spacing: 5px;
+}
+
+/*文字連結效果1 黑-->橘 */
+A.link-03-item:link {
+    font-size: 13px;
+    color: #0B0B0B;
+    line-height: 12px;
+    font-family: "Verdana", "Tohoma", "Helvetica", "sans-serif";
+    text-decoration: none;
+    line-height: 25px;
+    word-spacing: 1px;
+}
+
+A.link-03-item:visited {
+    font-size: 13px;
+    color: #0B0B0B;
+    line-height: 16px;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    text-decoration: none;
+    line-height: 25px;
+    word-spacing: 5px;
+}
+
+A.link-03-item:hover {
+    font-size: 13px;
+    color: #FF4000;
+    line-height: 16px;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    text-decoration: none;
+    line-height: 25px;
+    word-spacing: 5px;
+}
+
+
+
+A.iTask_Groupbar:link {
+    font-size: 13px;
+    color: #FFFFFF;
+    line-height: 12px;
+    font-family: "Verdana", "Tohoma", "Helvetica", "sans-serif";
+    text-decoration: none;
+    line-height: 25px;
+    word-spacing: 1px;
+}
+
+A.iTask_Groupbar:visited {
+    font-size: 13px;
+    color: #FFFFFF;
+    line-height: 16px;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    text-decoration: none;
+    line-height: 25px;
+    word-spacing: 5px;
+}
+
+A.iTask_Groupbar:hover {
+    font-size: 13px;
+    color: #FFFFFF;
+    line-height: 16px;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    text-decoration: none;
+    line-height: 25px;
+    word-spacing: 5px;
+}
+
+A.iTask_Listbar:link {
+    font-size: 13px; /*color: #780010; /*紅色系*/
+    color: #2A406F; /*紅藍系*/
+    line-height: 12px;
+    font-family: "Verdana", "Tohoma", "Helvetica", "sans-serif";
+    text-decoration: none;
+    line-height: 18px;
+    word-spacing: 1px;
+}
+
+A.iTask_Listbar:visited {
+    font-size: 13px; /*color: #780010; /*紅色系*/
+    color: #2A406F; /*紅藍系*/
+    line-height: 16px;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    text-decoration: none;
+    line-height: 18px;
+    word-spacing: 5px;
+}
+
+A.iTask_Listbar:hover {
+    font-size: 13px; /*color: #780010; /*紅色系*/
+    color: #2A406F; /*紅藍系*/
+    line-height: 16px;
+    font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+    text-decoration: none;
+    line-height: 18px;
+    word-spacing: 5px;
+}
+
+.ModalPopupBackground1 {
+    border: 1px solid #2f4f4f;
+    color: White;
+    background-color: #000000;
+    font-weight: bold;
+    cursor: not-allowed;
+    filter: Alpha(opacity=20);
+}
+
+/*
+Modern table design - template
+Download more PSD stuff from www.psdgraphics.com
+*/
+
+
+
+
+#psdgraphics-com-table {
+    margin: 0;
+    padding: 4px;
+    width: 578px;
+    font: 11px Arial, Helvetica, sans-serif;
+    color: #747474;
+    background-color: #0c2a62;
+}
+
+
+#psdg-header {
+    margin: 0;
+    padding: 14px 0 0 24px;
+    width: 554px;
+    height: 55px;
+    color: #FFF;
+    font-size: 13px;
+    background: #0c2c65 url(../images/head-bcg.jpg) no-repeat right top;
+}
+
+.psdg-bold {
+    font: bold 22px Arial, Helvetica, sans-serif;
+}
+
+#psdg-top {
+    margin: 0;
+    padding: 0;
+    width: 578px;
+    height: 46px;
+    border-top: 2px solid #FFF;
+    background: #eff4ff url(../images/top-light-blue.png) repeat-x left top;
+}
+
+.psdg-top-cell {
+    float: left;
+    padding: 15px 0 0 0;
+    text-align: center;
+    border-right: 1px solid #ced9ec;
+    color: #1f3d71;
+    font: 13px Arial, Helvetica, sans-serif;
+}
+
+.textborder {
+    border-bottom: dashed 1px #49738b;
+    font-weight: bold;
+}
+
+.psdg-left {
+    float: left;
+    margin: 0;
+    padding: 2px 2px 2px 2px;
+    text-align: left;
+    height: 25px;
+    border-right: 1px solid #ced9ec;
+    border-bottom: 1px solid #b3c1db;
+    color: #1f3d71;
+    font: 13px Arial, Helvetica, sans-serif;
+    background: #e4ebf8 url(../images/center-blue.png) repeat-y left top;
+}
+
+.psdg-middle {
+    text-align: left;
+    vertical-align: top;
+    line-height: 20pt;
+    border-right: 1px solid #ced9ec;
+    border-bottom: 1px solid #b3c1db;
+}
+
+.psdg-right {
+    color: Blue;
+    text-align: center;
+    border-right: 1px solid #ced9ec;
+    border-bottom: 1px solid #b3c1db;
+}
+
+#psdg-bottom {
+    clear: both;
+    margin: 0;
+    padding: 0;
+    width: 578px;
+    height: 48px;
+    border-top: 2px solid #FFF;
+    background: #e4e3e3 url(../images/bottom-line.png) repeat-x left top;
+}
+
+
+.psdg-bottom-cell {
+    float: left;
+    padding: 15px 0 0 0;
+    text-align: center;
+    width: 105px;
+    height: 33px;
+    border-right: 1px solid #ced9ec;
+    color: #070707;
+    font: 13px Arial, Helvetica, sans-serif;
+}
+
+
+
+#psdg-footer {
+    font-size: 10px;
+    color: #8a8a8a;
+    margin: 0;
+    padding: 8px 0 8px 12px;
+    width: 566px;
+    background: #f6f6f6 url(../images/center-bcg.png) repeat-y right top;
+}
+
+.grv_Clip {
+    word-break: break-all;
+}
+/**2012/7/02 新增 enable-Panel **/
+.enable-Panel {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+/*GridViewCSS Glass Black Style*/
+
+.GridViewStyle {
+    width: 100%;
+    border-spacing: 0px;
+    border-collapse: separate;
+    border-style: double;
+    border-width: 1px;
+    font-family: "Arial";
+    font-size: 14px;
+}
+
+    .GridViewStyle td {
+        padding: 5px;
+        border: 2px solid;
+    }
+
+    .GridViewStyle th {
+        background-color: #A7D1F0;
+        border: 2px solid;
+    }
+

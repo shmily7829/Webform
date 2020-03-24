@@ -1,0 +1,68 @@
+
+<!-- script language="javascript" runat="server" src="../../prod_inc/common_lib.js"></script -->
+
+<!--
+''*****************************************************************
+''File Name  : calendar.asp
+''Purpose    : 選取日期程式
+''Ref Object : 
+''Methods    : 
+''Remark     : 
+''Version    : 2003/11/24 by Gary Chen 功能改寫
+''*****************************************************************
+-->
+
+
+
+<HTML xmlns:MSIE="urn:default" id="htmlText" style="width: 365px; height: 240px">
+<HEAD>
+<title></title>
+<LINK REL="stylesheet" type="text/css" href="popcalendar.css" />
+<script language='javascript' src='popcalendar.js'></script>
+<script language='javascript'>
+
+//addHoliday(19,3,0, "Kevin's Birthday");
+document.title = window.dialogArguments.strTitle;
+
+window.onload = function()
+{
+
+	window.returnValue = new Array();
+	window.returnValue.strDate = null;
+
+	sReturnDate = window.dialogArguments.strDate;
+	if( sReturnDate == null)	sReturnDate = "";
+
+
+	init();
+	popUpCalendar( "yyyy/mm/dd");
+}
+
+window.onhelp = function()
+{
+	prompt( "", document.body.outerHTML);
+	return false;
+}
+
+
+function on_Close()
+{
+}
+
+
+document.onkeydown = function()
+{
+	switch( window.event.keyCode)
+	{
+		case 27:
+			window.close();
+	}
+
+}
+
+
+</script>
+</HEAD>
+<BODY bgcolor="#cee3ef">
+</BODY>
+</HTML>

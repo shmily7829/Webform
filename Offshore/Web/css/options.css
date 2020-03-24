@@ -1,0 +1,119 @@
+body {
+	margin: 0px;
+	background-image: url(../images/bg.png);
+	background-repeat: repeat-y;
+	min-width: 945px;
+ behavior: expression(this.style.width=(document.documentElement.offsetWidth<945)?"945px":"100%");
+}
+.title_bg {
+	background-image: url(../images/title_bg.png);
+	background-repeat: repeat-x;
+	width: 100%;
+	height: 80px;
+}
+.title {
+	background-image: url(../images/title.png);
+	background-repeat: no-repeat;
+	width: 830px;
+}
+.name {
+	background-image: url(../images/name.png);
+	background-repeat: no-repeat;
+	width: 115px;
+}
+.sub_title {
+	background-image: url(../images/sub_title.png);
+	background-repeat: repeat-x;
+	height: 32px;
+	width: 100%;
+	font-family: "微軟正黑體", "細明體", sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	color: #252525;
+}
+.sub_title_info {
+	padding-left: 15px;
+	width: 300px;
+}
+.sub_title_right {
+	font-size: 14px;
+	color: #3E3E3E;
+	width: 280px;
+}
+.options {
+	background-image: url(../images/options.png);
+	background-repeat: no-repeat;
+	background-position: 0px center;
+	padding-left: 29px;
+	cursor: default;
+	display: inline-block;
+	padding-right: 10px;
+	color: #3E3E3E;
+}
+.options:hover {
+	background-image: url(../images/options_hover.png);
+	color: #06F;
+}
+.help {
+	background-image: url(../images/help.png);
+	background-repeat: no-repeat;
+	background-position: 0px center;
+	padding-left: 28px;
+	cursor: pointer;
+	padding-right: 10px;
+	text-decoration: none;
+	color: #3E3E3E;
+}
+.help:hover {
+	color: #06F;
+	background-image: url(../images/help_hover.png);
+}
+.logout {
+	background-image: url(../images/logout.png);
+	background-repeat: no-repeat;
+	background-position: 0px center;
+	padding-left: 28px;
+	cursor: pointer;
+	padding-right: 10px;
+	text-decoration: none;
+	color: #3E3E3E;
+}
+.logout:hover {
+	color: #06F;
+	background-image: url(../images/logout_hover.png);
+}
+.navi {
+	font-family: "微軟正黑體", "細明體", sans-serif;
+	font-size: 16px;
+	color: #333;
+	font-weight: bold;
+	width: 200px;
+	cursor: pointer;
+}
+.open {
+	background-image: url(../images/open.png);
+	background-repeat: no-repeat;
+	padding-left: 7px;
+	height: 40px;
+}
+.close {
+	background-image: url(../images/close.png);
+	background-repeat: no-repeat;
+	padding-left: 7px;
+	height: 40px;
+}
+.close:hover {
+	background-image: url(../images/open.png);
+}
+.open_items {
+	background-color: #FFF;
+	padding-left: 25px;
+	height: 25px;
+	font-size: 14px;
+	background-image: url(../images/list.png);
+	background-repeat: no-repeat;
+	background-position: 13px center;
+}
+.open_items:hover {
+	background-color: #FFFFCC;
+}

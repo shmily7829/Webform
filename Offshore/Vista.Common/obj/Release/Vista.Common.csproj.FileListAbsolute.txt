@@ -1,0 +1,87 @@
+E:\Dev-Public\Jimull\ANZ_TCCU\Vista.Common\bin\Release\Vista.Common.dll
+E:\Dev-Public\Jimull\ANZ_TCCU\Vista.Common\bin\Release\Vista.Common.pdb
+E:\Dev-Public\Jimull\ANZ_TCCU\Vista.Common\bin\Release\ICSharpCode.SharpZipLib.dll
+E:\Dev-Public\Jimull\ANZ_TCCU\Vista.Common\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+E:\Dev-Public\Jimull\ANZ_TCCU\Vista.Common\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+E:\Dev-Public\Jimull\ANZ_TCCU\Vista.Common\bin\Release\NPOI.dll
+E:\Dev-Public\Jimull\ANZ_TCCU\Vista.Common\bin\Release\Vista.SEC.dll
+E:\Dev-Public\Jimull\ANZ_TCCU\Vista.Common\bin\Release\Microsoft.Practices.Unity.dll
+E:\Dev-Public\Jimull\ANZ_TCCU\Vista.Common\bin\Release\Microsoft.Practices.ObjectBuilder2.dll
+E:\Dev-Public\Jimull\ANZ_TCCU\Vista.Common\bin\Release\Ionic.Zip.dll
+E:\Dev-Public\Jimull\ANZ_TCCU\Vista.Common\obj\Release\ResolveAssemblyReference.cache
+E:\Dev-Public\Jimull\ANZ_TCCU\Vista.Common\obj\Release\Vista.Common.dll
+E:\Dev-Public\Jimull\ANZ_TCCU\Vista.Common\obj\Release\Vista.Common.pdb
+D:\澳盛_ANZ\國泰security\ANZ_TCCU\Vista.Common\bin\Release\Vista.Common.dll
+D:\澳盛_ANZ\國泰security\ANZ_TCCU\Vista.Common\bin\Release\Vista.Common.pdb
+D:\澳盛_ANZ\國泰security\ANZ_TCCU\Vista.Common\bin\Release\AntiXSSLibrary.dll
+D:\澳盛_ANZ\國泰security\ANZ_TCCU\Vista.Common\bin\Release\EastAsiaNumericFormatter.dll
+D:\澳盛_ANZ\國泰security\ANZ_TCCU\Vista.Common\bin\Release\ICSharpCode.SharpZipLib.dll
+D:\澳盛_ANZ\國泰security\ANZ_TCCU\Vista.Common\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\澳盛_ANZ\國泰security\ANZ_TCCU\Vista.Common\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\澳盛_ANZ\國泰security\ANZ_TCCU\Vista.Common\bin\Release\NPOI.dll
+D:\澳盛_ANZ\國泰security\ANZ_TCCU\Vista.Common\bin\Release\Vista.SEC.dll
+D:\澳盛_ANZ\國泰security\ANZ_TCCU\Vista.Common\bin\Release\Vista.SEC.Information.dll
+D:\澳盛_ANZ\國泰security\ANZ_TCCU\Vista.Common\bin\Release\Microsoft.Practices.Unity.dll
+D:\澳盛_ANZ\國泰security\ANZ_TCCU\Vista.Common\bin\Release\Microsoft.Practices.ObjectBuilder2.dll
+D:\澳盛_ANZ\國泰security\ANZ_TCCU\Vista.Common\bin\Release\Ionic.Zip.dll
+D:\澳盛_ANZ\國泰security\ANZ_TCCU\Vista.Common\bin\Release\Vista.SEC.Information.pdb
+D:\澳盛_ANZ\國泰security\ANZ_TCCU\Vista.Common\obj\Release\ResolveAssemblyReference.cache
+D:\澳盛_ANZ\國泰security\ANZ_TCCU\Vista.Common\obj\Release\Vista.Common.dll
+D:\澳盛_ANZ\國泰security\ANZ_TCCU\Vista.Common\obj\Release\Vista.Common.pdb
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.Common\bin\Release\Vista.Common.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.Common\bin\Release\Vista.Common.pdb
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.Common\bin\Release\AntiXSSLibrary.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.Common\bin\Release\EastAsiaNumericFormatter.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.Common\bin\Release\ICSharpCode.SharpZipLib.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.Common\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.Common\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.Common\bin\Release\NPOI.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.Common\bin\Release\NPOI.OOXML.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.Common\bin\Release\NPOI.OpenXml4Net.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.Common\bin\Release\NPOI.OpenXmlFormats.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.Common\bin\Release\Vista.SEC.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.Common\bin\Release\Vista.SEC.Information.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.Common\bin\Release\Microsoft.Practices.ObjectBuilder2.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.Common\bin\Release\Microsoft.Practices.Unity.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.Common\bin\Release\NPOI.xml
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.Common\obj\Release\Vista.Common.csprojResolveAssemblyReference.cache
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.Common\obj\Release\Vista.Common.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.Common\obj\Release\Vista.Common.pdb
+D:\vista\ANZ_DAR\Vista.Common\bin\Release\Vista.Common.dll
+D:\vista\ANZ_DAR\Vista.Common\bin\Release\Vista.Common.pdb
+D:\vista\ANZ_DAR\Vista.Common\bin\Release\AntiXSSLibrary.dll
+D:\vista\ANZ_DAR\Vista.Common\bin\Release\EastAsiaNumericFormatter.dll
+D:\vista\ANZ_DAR\Vista.Common\bin\Release\ICSharpCode.SharpZipLib.dll
+D:\vista\ANZ_DAR\Vista.Common\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\vista\ANZ_DAR\Vista.Common\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\vista\ANZ_DAR\Vista.Common\bin\Release\NPOI.dll
+D:\vista\ANZ_DAR\Vista.Common\bin\Release\NPOI.OOXML.dll
+D:\vista\ANZ_DAR\Vista.Common\bin\Release\NPOI.OpenXml4Net.dll
+D:\vista\ANZ_DAR\Vista.Common\bin\Release\NPOI.OpenXmlFormats.dll
+D:\vista\ANZ_DAR\Vista.Common\bin\Release\Vista.SEC.dll
+D:\vista\ANZ_DAR\Vista.Common\bin\Release\Vista.SEC.Information.dll
+D:\vista\ANZ_DAR\Vista.Common\bin\Release\Microsoft.Practices.ObjectBuilder2.dll
+D:\vista\ANZ_DAR\Vista.Common\bin\Release\Microsoft.Practices.Unity.dll
+D:\vista\ANZ_DAR\Vista.Common\bin\Release\NPOI.xml
+D:\vista\ANZ_DAR\Vista.Common\obj\Release\Vista.Common.csprojResolveAssemblyReference.cache
+D:\vista\ANZ_DAR\Vista.Common\obj\Release\Vista.Common.dll
+D:\vista\ANZ_DAR\Vista.Common\obj\Release\Vista.Common.pdb
+D:\vista\Coding\ANZ_DAR\Vista.Common\bin\Release\Vista.Common.dll
+D:\vista\Coding\ANZ_DAR\Vista.Common\bin\Release\Vista.Common.pdb
+D:\vista\Coding\ANZ_DAR\Vista.Common\bin\Release\AntiXSSLibrary.dll
+D:\vista\Coding\ANZ_DAR\Vista.Common\bin\Release\EastAsiaNumericFormatter.dll
+D:\vista\Coding\ANZ_DAR\Vista.Common\bin\Release\ICSharpCode.SharpZipLib.dll
+D:\vista\Coding\ANZ_DAR\Vista.Common\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\vista\Coding\ANZ_DAR\Vista.Common\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\vista\Coding\ANZ_DAR\Vista.Common\bin\Release\NPOI.dll
+D:\vista\Coding\ANZ_DAR\Vista.Common\bin\Release\NPOI.OOXML.dll
+D:\vista\Coding\ANZ_DAR\Vista.Common\bin\Release\NPOI.OpenXml4Net.dll
+D:\vista\Coding\ANZ_DAR\Vista.Common\bin\Release\NPOI.OpenXmlFormats.dll
+D:\vista\Coding\ANZ_DAR\Vista.Common\bin\Release\Vista.SEC.dll
+D:\vista\Coding\ANZ_DAR\Vista.Common\bin\Release\Vista.SEC.Information.dll
+D:\vista\Coding\ANZ_DAR\Vista.Common\bin\Release\Microsoft.Practices.ObjectBuilder2.dll
+D:\vista\Coding\ANZ_DAR\Vista.Common\bin\Release\Microsoft.Practices.Unity.dll
+D:\vista\Coding\ANZ_DAR\Vista.Common\bin\Release\NPOI.xml
+D:\vista\Coding\ANZ_DAR\Vista.Common\obj\Release\Vista.Common.csprojResolveAssemblyReference.cache
+D:\vista\Coding\ANZ_DAR\Vista.Common\obj\Release\Vista.Common.dll
+D:\vista\Coding\ANZ_DAR\Vista.Common\obj\Release\Vista.Common.pdb

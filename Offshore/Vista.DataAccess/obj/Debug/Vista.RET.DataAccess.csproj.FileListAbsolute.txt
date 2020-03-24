@@ -1,0 +1,24 @@
+E:\ANZ_Coding\ANZ_RET\Vista.RET.DataAccess\obj\Debug\ResolveAssemblyReference.cache
+E:\ANZ_Coding\ANZ_RET\Vista.RET.DataAccess\bin\Debug\Vista.RET.DataAccess.dll
+E:\ANZ_Coding\ANZ_RET\Vista.RET.DataAccess\bin\Debug\Vista.RET.DataAccess.pdb
+E:\ANZ_Coding\ANZ_RET\Vista.RET.DataAccess\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+E:\ANZ_Coding\ANZ_RET\Vista.RET.DataAccess\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+E:\ANZ_Coding\ANZ_RET\Vista.RET.DataAccess\bin\Debug\Vista.RET.Information.dll
+E:\ANZ_Coding\ANZ_RET\Vista.RET.DataAccess\bin\Debug\Vista.SEC.dll
+E:\ANZ_Coding\ANZ_RET\Vista.RET.DataAccess\bin\Debug\Microsoft.Practices.Unity.dll
+E:\ANZ_Coding\ANZ_RET\Vista.RET.DataAccess\bin\Debug\Microsoft.Practices.ObjectBuilder2.dll
+E:\ANZ_Coding\ANZ_RET\Vista.RET.DataAccess\bin\Debug\Vista.RET.Information.pdb
+E:\ANZ_Coding\ANZ_RET\Vista.RET.DataAccess\obj\Debug\Vista.RET.DataAccess.dll
+E:\ANZ_Coding\ANZ_RET\Vista.RET.DataAccess\obj\Debug\Vista.RET.DataAccess.pdb
+D:\Arlen\Desktop\2. ANZ - Data Retention\ANZ_RET\Vista.RET.DataAccess\bin\Debug\Vista.RET.DataAccess.dll
+D:\Arlen\Desktop\2. ANZ - Data Retention\ANZ_RET\Vista.RET.DataAccess\bin\Debug\Vista.RET.DataAccess.pdb
+D:\Arlen\Desktop\2. ANZ - Data Retention\ANZ_RET\Vista.RET.DataAccess\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\Arlen\Desktop\2. ANZ - Data Retention\ANZ_RET\Vista.RET.DataAccess\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\Arlen\Desktop\2. ANZ - Data Retention\ANZ_RET\Vista.RET.DataAccess\bin\Debug\Vista.RET.Information.dll
+D:\Arlen\Desktop\2. ANZ - Data Retention\ANZ_RET\Vista.RET.DataAccess\bin\Debug\Vista.SEC.dll
+D:\Arlen\Desktop\2. ANZ - Data Retention\ANZ_RET\Vista.RET.DataAccess\bin\Debug\Microsoft.Practices.ObjectBuilder2.dll
+D:\Arlen\Desktop\2. ANZ - Data Retention\ANZ_RET\Vista.RET.DataAccess\bin\Debug\Microsoft.Practices.Unity.dll
+D:\Arlen\Desktop\2. ANZ - Data Retention\ANZ_RET\Vista.RET.DataAccess\bin\Debug\Vista.RET.Information.pdb
+D:\Arlen\Desktop\2. ANZ - Data Retention\ANZ_RET\Vista.RET.DataAccess\obj\Debug\Vista.RET.DataAccess.csprojResolveAssemblyReference.cache
+D:\Arlen\Desktop\2. ANZ - Data Retention\ANZ_RET\Vista.RET.DataAccess\obj\Debug\Vista.RET.DataAccess.dll
+D:\Arlen\Desktop\2. ANZ - Data Retention\ANZ_RET\Vista.RET.DataAccess\obj\Debug\Vista.RET.DataAccess.pdb

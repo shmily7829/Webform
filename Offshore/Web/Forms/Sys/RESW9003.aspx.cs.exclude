@@ -1,0 +1,573 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using Vista.DataAccess;
+using Vista.Information;
+using Microsoft.Security.Application;
+
+public partial class RESW9003 : basePage
+{
+    #region 定義變數
+
+    public enum ModeType { Query, AddNew, Modify };
+
+    public ModeType Mode
+    {
+        get
+        {
+            return (ModeType)ViewState["Mode"];
+        }
+        set
+        {
+            ViewState["Mode"] = value;
+        }
+    }
+
+    #endregion
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            InitialForm(); //撈db資料bind下拉選單
+            SetPlatform(ModeType.Query); //控制panel顯示
+        }
+    }
+
+    #region Button Function
+
+    #endregion
+
+    #region Initial Function
+    public void InitialForm()
+    {
+        BindSystemCodeType(ddlqType);
+    }
+
+    //作業平台欄位值初始化(AddNew)
+    protected void InitialAddNew()
+    {
+        lbModItem.Text = "新增";
+        txtiType.Text = "";
+        txtiValue.Text = "";
+        txtiText.Text = "";
+        txtiDisplayOrder.Text = "0";
+        txtiValue2.Text = "";
+        txtiREMARKS.Text = "";
+
+        //新增不能刪除跟捨棄
+        //btnDrop.Enabled = false;
+        //btnDel.Enabled = false;
+
+        txtiType.Enabled = true;
+        txtiValue.Enabled = true;
+    }
+
+    //作業平台欄位值初始化(Modify)
+    protected void InitialModify()
+    {
+        txtiType.Enabled = false;
+        txtiValue.Enabled = false;
+
+        btnDel.Enabled = true;
+    }
+    #endregion
+
+    #region Button Function
+    //查詢
+    protected void btnQ_Click(object sender, EventArgs e)
+    {
+        if (Query())
+        {
+            DataListLoad();
+        }
+    }
+
+    //新增
+    protected void btnAdd_Click(object sender, EventArgs e)
+    {
+        SetPlatform(ModeType.AddNew);
+        SetBtnStatus(false, false);
+    }
+
+    //取消
+    protected void btnCancel_Click(object sender, EventArgs e)
+    {
+        //重回查詢畫面
+        SetPlatform(ModeType.Query);
+        DataListLoad();
+    }
+
+    //編輯
+    protected void rplbtnEdit_Click(object sender, EventArgs e)
+    {
+        //從Repeater底部開始找按鈕,確認使用者按下編輯的資料列為何
+        RepeaterItem rp_item = ((sender as Button).NamingContainer) as RepeaterItem;
+
+        //設定rplbType和rplbValue兩個物件為Label屬性,並取得text值
+        string iType = ((Label)rp_item.FindControl("rplbType")).Text;
+        string iValue = ((Label)rp_item.FindControl("rplbValue")).Text;
+
+        //透過view()檢查編輯按鈕狀態
+        //如果選取的資料列可編輯則進入編輯狀態,若否則重load畫面
+        if (View(iType, iValue))
+            SetPlatform(ModeType.Modify);
+        else
+            DataListLoad();
+    }
+
+    //刪除
+    protected void btnDel_Click(object sender, EventArgs e)
+    {
+        if (Delete())
+        {
+            SetPlatform(ModeType.Query);
+            DataListLoad();
+        }
+    }
+
+    //暫存
+    protected void btnSave_Click(object sender, EventArgs e)
+    {
+
+        if (Save(Mode, true))
+        {
+            switch (Mode)
+            {
+                case ModeType.AddNew://新增
+                    if (Insert("5"))
+                    {
+                        SetPlatform(ModeType.Query);
+
+                        DataListLoad();
+                    }
+                    break;
+
+                case ModeType.Modify://編輯
+                    if (Update("5"))
+                    {
+                        SetPlatform(ModeType.Query);
+
+                        DataListLoad();
+                    }
+                    break;
+            }
+        }
+
+    }
+
+    #endregion
+
+    #region DataList Funtion
+    protected void ucDataGridView1_ChangePageClick(int _OffsecCount, int _FetchCount)
+    {
+        string Type = ddlqType.SelectedValue;
+        string Value = txtqValue.Text.Trim();
+        string Text = txtqText.Text.Trim();
+
+        SystemCodeDB myDB = new SystemCodeDB(base.strUserID, base.FormID);
+
+        //DataTable dt = myDB.getSystemCode(Type, Value, Text, SystemCodeDB.SelectType.Query, SystemCodeDB.WorkType.Maker, _OffsetCount, _FetchCount);
+        DataTable dt = myDB.getSystemCode_select(Type, Value, Text, _OffsecCount, _FetchCount);
+        repDataListBind(dt);
+    }
+    public void DataListLoad()
+    {
+        SystemCodeDB myDB = new SystemCodeDB(base.strUserID, base.FormID);
+
+        string Type = ddlqType.SelectedValue;
+        string Value = txtqValue.Text.Trim();
+        string Text = txtqText.Text.Trim();
+
+        #region 依查詢條件取得總筆數
+
+        int TotalCount = 0;
+
+        //DataTable CountDt = myDB.getSystemCode(Type, Value, Text, SystemCodeDB.SelectType.Count, SystemCodeDB.WorkType.Maker);
+        DataTable CountDt = myDB.getSystemCode_count(Type, Value, Text);
+        if (CountDt != null && CountDt.Rows.Count > 0)
+        {
+            DataRow CountDr = CountDt.Rows[0];
+
+            TotalCount = Convert.ToInt32(CountDr["ROW_COUNT"]);
+        }
+        #endregion
+
+        ucDataGridView1._TotalCount = TotalCount;
+        ucDataGridView1.ToFirst();
+    }
+
+    public void repDataListBind(DataTable dt)
+    {
+        //依條件搜尋資料筆數>0時,進行結果顯示判斷
+        if (dt.Rows.Count > 0)
+        {
+            plShowEmpty.Visible = false;
+            plShowList.Visible = true;
+        }
+        else
+        {
+            plShowEmpty.Visible = true;
+            plShowList.Visible = false;
+        }
+        try
+        {
+            //取得或設定資料來源中提供的資料填入清單。
+            repDataList.DataSource = dt;
+            //將結果傳送至畫面
+            repDataList.DataBind();
+        }
+        catch (Exception ex)
+        {
+
+        }
+    }
+    #endregion
+
+    #region 自訂Function
+    /// <summary>
+    /// 設定畫面顯示區塊
+    /// </summary>
+    /// <param name="iMode">畫面狀態</param>
+    public void SetPlatform(ModeType iMode)
+    {
+        Mode = iMode;
+        switch (Mode)
+        {
+            //查詢顯示
+            case ModeType.Query:
+                plQuery.Visible = true;     //查詢
+                plList.Visible = true;      //清單
+                plDetails.Visible = false;  //細節
+
+                QueryFocus();
+
+                break;
+
+            //新增顯示
+            case ModeType.AddNew:
+                plQuery.Visible = false;
+                plList.Visible = false;
+                plDetails.Visible = true;
+
+                AddNewFocus();
+                InitialAddNew();
+
+                break;
+
+            case ModeType.Modify:
+                plQuery.Visible = false;
+                plList.Visible = false;
+                plDetails.Visible = true;
+
+                ModifyFocus();
+                InitialModify();
+
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 設定刪除跟捨棄按鈕狀態
+    /// </summary>
+    /// <param name="InBuff">是否在Buffer</param>
+    /// <param name="InOfficial">是否在正式資料</param>
+    public void SetBtnStatus(bool InBuff, bool InOfficial)
+    {
+        //Buffer有資料表示可以捨棄
+        //if (InBuff)
+        //    btnDrop.Enabled = true;
+        //else
+        //    btnDrop.Enabled = false;
+
+        //有正式資料表示可以刪除
+        if (InOfficial)
+            btnDel.Enabled = true;
+        else
+            btnDel.Enabled = false;
+    }
+
+    /// <summary>
+    /// 將 info 的值填入到 UI 中
+    /// </summary>
+    /// <param name="info"></param>
+    private void FillModFieldValue(SystemCodeInfo myInfo)
+    {
+        //資料狀態
+        lbModItem.Text = "修改";
+
+        //data fields
+        txtiType.Text = myInfo.Type;
+        txtiValue.Text = myInfo.Value;
+        txtiText.Text = myInfo.Text;
+        txtiDisplayOrder.Text = myInfo.DisplayOrder.ToString();
+        txtiValue2.Text = myInfo.Value2;
+        txtiREMARKS.Text = myInfo.REMARKS;
+    }
+
+    /// <summary>
+    /// 將UI上的值指定到Info中
+    /// </summary>
+    /*
+    private void GetModFieldValue(out SystemCodeBufInfo BuffInfo)
+    {
+        BuffInfo = new SystemCodeBufInfo();
+
+        //將值指定到Info中
+        BuffInfo.Type = txtiType.Text.Trim();
+        BuffInfo.Value = txtiValue.Text.Trim();
+        BuffInfo.Text = txtiText.Text.Trim();
+
+        if (!string.IsNullOrEmpty(txtiDisplayOrder.Text.Trim()))
+            BuffInfo.DisplayOrder = Convert.ToInt32(txtiDisplayOrder.Text);
+        else
+            BuffInfo.DisplayOrder = 0;
+
+        BuffInfo.Value2 = txtiValue2.Text.Trim();
+        BuffInfo.REMARKS = txtiREMARKS.Text.Trim();
+    }
+    */
+    protected void BindSystemCodeType(DropDownList ddl)
+    {
+        SystemCodeDB myDB = new SystemCodeDB(base.strUserID, base.FormID);
+
+        //把抓資料的方法放入Dt
+        DataTable Dt = myDB.getSystemCode_distinct();
+        //取得DB中的物件
+        ddlqType.DataSource = Dt;
+        //取得或設定提供每個清單項目值的資料來源的欄位
+        ddlqType.DataValueField = "type";
+        ddlqType.DataTextField = "type";
+        ddlqType.DataBind();
+        //加入顯示預設字串在0的位置
+        ddlqType.Items.Insert(0, new ListItem("請選擇", ""));
+    }
+    #endregion
+
+    #region Focus Function
+
+    // 查詢 Focus 欄位
+    protected void QueryFocus()
+    {
+        ddlqType.Focus();
+    }
+
+    //新增 Focus 欄位
+    protected void AddNewFocus()
+    {
+        txtiType.Focus();
+    }
+
+    //更新 Focus 欄位
+    protected void ModifyFocus()
+    {
+
+    }
+    #endregion
+
+
+    #region 欄位檢核
+    protected bool Query()
+    {
+        return true;
+    }
+
+    //按下編輯按鈕
+    /// <param name="Type">選單類別</param>
+    /// <param name="Value">代碼值</param>
+    protected bool View(string Type, string Value)
+    {
+        //初始化db
+        SystemCodeDB myDB = new SystemCodeDB(base.strUserID, base.FormID);
+
+        //檢查資料是否存在
+        bool isExisting = myDB.chkSystemCode(Type, Value);
+
+        if (isExisting)
+        {
+            SystemCodeInfo myInfo;
+
+            myDB.LoadSystemCode(Type, Value, out myInfo);
+
+            //iInfo = new SystemCodeBufInfo(myInfo);
+
+            FillModFieldValue(myInfo);
+
+            return true;
+        }
+        else
+        {
+            //無該筆資料
+            base.DoAlertinAjax(this, "SAVE", "該筆資料可能已被刪除，請重新查詢。");
+            return false;
+        }
+
+
+    }
+
+    //按下儲存按鈕(欄位檢核)
+    protected bool Save(ModeType Mode, bool SaveTemp)
+    {
+        //檢查type有沒有填
+        if (string.IsNullOrEmpty(txtiType.Text.Trim()))
+        {
+            base.DoAlertinAjax(this, "SAVE", "選單類別為必填，請確認!");
+            txtiType.Focus();
+            return false;
+        }
+
+        //檢查value有沒有填
+        if (string.IsNullOrEmpty(txtiValue.Text.Trim()))
+        {
+            base.DoAlertinAjax(this, "SAVE", "代碼值為必填，請確認!");
+            txtiValue.Focus();
+            return false;
+        }
+
+        //檢查text有沒有填
+        if (string.IsNullOrEmpty(txtiText.Text.Trim()))
+        {
+            base.DoAlertinAjax(this, "SAVE", "顯示名稱為必填，請確認!");
+            txtiText.Focus();
+            return false;
+        }
+
+        //若是暫存作業，無須完整檢查
+        if (SaveTemp)
+            return true;
+
+        return true;
+    }
+    #endregion
+
+    #region 異動處理
+
+    /// <summary>
+    /// 資料新增
+    /// </summary>
+    protected bool Insert(string StepID)
+    {
+        SystemCodeDB myDB = new SystemCodeDB(base.strUserID, base.FormID);
+
+        try
+        {
+            //取KEY值
+            string Type = txtiType.Text.Trim();
+            string Value = txtiValue.Text.Trim();
+
+            //取出uer輸入的值
+            SystemCodeInfo InputInfo = new SystemCodeInfo();
+
+            //將值指定到Info中
+            InputInfo.Type = txtiType.Text.Trim();
+            InputInfo.Value = txtiValue.Text.Trim();
+            InputInfo.Text = txtiText.Text.Trim();
+            InputInfo.DisplayOrder = Convert.ToInt32(txtiDisplayOrder.Text);
+            InputInfo.Value2 = txtiValue2.Text.Trim();
+            InputInfo.REMARKS = txtiREMARKS.Text.Trim();
+
+            InputInfo.Maker_Time = DateTime.Now;
+            InputInfo.Checker_Time = DateTime.Now;
+
+            //檢查是否有在正式資料中
+            bool IsExistOfficial = myDB.chkSystemCode(Type, Value);
+
+            if (IsExistOfficial)
+            {
+                base.DoAlertinAjax(this, "SAVE", "該資料已存在，請重新查詢。");
+                return false;
+            }
+            else
+            {
+                myDB.InsSystemCode(InputInfo);
+                base.DoAlertinAjax(this, "SAVE", "儲存完成!");
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            base.DoAlertinAjax(this, "SAVE", "遇到例外情況" + ex.ToString());
+            return false;
+        }
+
+    }
+
+    /// <summary>
+    /// 資料更新
+    /// </summary>
+    protected bool Update(string StepID)
+    {
+        SystemCodeDB myDB = new SystemCodeDB(base.strUserID, base.FormID);
+
+        try
+        {
+            //取KEY值
+            string Type = txtiType.Text.Trim();
+            string Value = txtiValue.Text.Trim();
+
+            //是否有在正式資料中
+            bool IsExistOfficial = myDB.chkSystemCode(Type, Value);
+
+            //取出uer輸入的值
+            SystemCodeInfo InputInfo = new SystemCodeInfo();
+
+            //將值指定到Info中
+            InputInfo.Type = txtiType.Text.Trim();
+            InputInfo.Value = txtiValue.Text.Trim();
+            InputInfo.Text = txtiText.Text.Trim();
+            InputInfo.DisplayOrder = Convert.ToInt32(txtiDisplayOrder.Text);
+            InputInfo.Value2 = txtiValue2.Text.Trim();
+            InputInfo.REMARKS = txtiREMARKS.Text.Trim();
+
+            InputInfo.Maker_Time = DateTime.Now;
+            InputInfo.Checker_Time = DateTime.Now;
+
+            //把資料寫進db
+            if (IsExistOfficial)
+            {
+                myDB.UpdSystemCode(InputInfo);
+                base.DoAlertinAjax(this, "SAVE", "更新完成!");
+            }
+            else
+            {
+                base.DoAlertinAjax(this, "SAVE", "資料不存在!");
+                return false;
+            }
+        }
+        catch (Exception ex)
+        {
+            base.DoAlertinAjax(this, "SAVE", "遇到例外情況" + ex.ToString());
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// 資料刪除
+    /// </summary>
+    protected bool Delete()
+    {
+        SystemCodeDB myDB = new SystemCodeDB(base.strUserID, base.FormID);
+
+        try
+        {
+            //取KEY值
+            string Type = txtiType.Text.Trim();
+            string Value = txtiValue.Text.Trim();
+
+            //呼叫db
+            bool DelDt = myDB.DelSystemCode(Type, Value);
+
+            base.DoAlertinAjax(this, "SAVE", "申請刪除完成!");
+        }
+        catch (Exception ex)
+        {
+            base.DoAlertinAjax(this, "SAVE", "遇到例外情況" + ex.ToString());
+        }
+        return true;
+    }
+    #endregion
+}

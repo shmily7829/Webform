@@ -1,0 +1,1288 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Data;
+using System.Xml;
+using System.IO;
+
+namespace Vista.CTI.Business
+{
+    partial class ReportQueryBiz : baseDB
+    {
+        #region other
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetCancel_Credit_Card_Report(string[] CancelTypes, string StartTime, string EndTime, string[] Form_Name, string[] Cancel_Type_field_id)
+        {
+            Vista.CTI.DataAccess.FlowDB myFlowDB = new Vista.CTI.DataAccess.FlowDB();
+            Vista.CTI.DataAccess.FormDefineDB myFormDefineDB = new Vista.CTI.DataAccess.FormDefineDB();
+            Vista.CTI.DataAccess.FormFieldOptionListDB myDB = new Vista.CTI.DataAccess.FormFieldOptionListDB();
+
+            DataTable OUTDT = new DataTable();
+            OUTDT.Columns.Add("Form_Name");
+            if (CancelTypes == null)
+            {
+                foreach (DataRow _dr in myDB.GetFormFieldOptionList(Cancel_Type_field_id).Rows)
+                {
+                    if (!OUTDT.Columns.Contains(_dr["locationvalue"].ToString())) OUTDT.Columns.Add(_dr["locationvalue"].ToString());
+                }
+            }
+            else
+            {
+                foreach (string locationvalue in CancelTypes)
+                {
+                    if (!OUTDT.Columns.Contains(locationvalue)) OUTDT.Columns.Add(locationvalue);
+                }
+            }
+
+            for (int i = 0; i < Form_Name.Length; i++)
+            {
+                DataRow OUTDR = OUTDT.NewRow();
+                DataTable FormDefineDT = myFormDefineDB.GetFormDefineList_LLike_FormName(Form_Name[i]);
+                if (FormDefineDT.Rows.Count > 0)
+                {
+                    OUTDR["Form_Name"] = FormDefineDT.Rows[0]["FormName"].ToString();
+                }
+                else
+                {
+                    OUTDR["Form_Name"] = Form_Name[i];
+                }
+                foreach (DataColumn DC in OUTDT.Columns)
+                {
+                    if (DC.ColumnName != "Form_Name")
+                        OUTDR[DC.ColumnName] = 0;
+                }
+
+                DataTable InstanceIDDT = myFlowDB.GetInstanceID_By_FormName(Form_Name[i], "", StartTime, EndTime);
+
+                if (InstanceIDDT.Rows.Count == 0)
+                {
+                    OUTDT.Columns["Form_Name"].ColumnName = "問題單名稱";
+                    return OUTDT;
+                }
+                string InstanceID = "";
+                foreach (DataRow DRTemp in InstanceIDDT.Rows)
+                {
+                    InstanceID += "," + DRTemp["InstanceID"].ToString();
+                }
+                InstanceID = InstanceID.Substring(1);
+
+                DataTable iMainFormContentDT = myFlowDB.GetXml2Table_By_iMainFormContent(InstanceID.Split(','));
+
+
+                foreach (DataRow DRTemp in InstanceIDDT.Rows)
+                {
+                    DataRow[] iMainFormContentDR = iMainFormContentDT.Select("InstanceID='" + DRTemp["InstanceID"].ToString() + "'");
+                    if (iMainFormContentDR.Length == 0) continue;
+
+                    if (!OUTDT.Columns.Contains(iMainFormContentDR[0][Cancel_Type_field_id[i]].ToString()))
+                    {
+                        OUTDR[iMainFormContentDR[0][Cancel_Type_field_id[i]].ToString()] = Convert.ToInt32(OUTDR[iMainFormContentDR[0][Cancel_Type_field_id[i]].ToString()]) + 1;
+                    }
+                }
+
+                OUTDT.Rows.Add(OUTDR);
+            }
+            return OUTDT;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetAuto_SBI_Cancel_Report(string TeamID, string StartDate, string EndDate)
+        {
+            Vista.CTI.DataAccess.CMSDB myCMSDB = new Vista.CTI.DataAccess.CMSDB();
+            return myCMSDB.GetvwSBI_Auto_Cancel_Report(TeamID, StartDate, EndDate);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetAuto_SBI_Cancel_Mapping_Rule_Report(string TeamID, string StartDate, string EndDate, string FormName, string Cancel_Type, string Type_ID)
+        {
+            Vista.CTI.DataAccess.CMSDB myCMSDB = new Vista.CTI.DataAccess.CMSDB();
+            Vista.CTI.DataAccess.FlowDB myFlowDB = new Vista.CTI.DataAccess.FlowDB();
+            DataTable OUTDT = new DataTable();
+            OUTDT.Columns.Add("IDN"); OUTDT.Columns.Add("CSR_ID"); OUTDT.Columns.Add("CSR_Term"); OUTDT.Columns.Add("Type_ID");
+            OUTDT.Columns.Add("Cancel_Type"); OUTDT.Columns.Add("Result"); OUTDT.Columns.Add("Note");
+
+            DataTable SBI_Auto_Cancel_ReportDT = myCMSDB.GetvwSBI_Auto_Cancel_Report(TeamID, StartDate, EndDate);
+            DataTable CMS_AUTO_LOGONDT = myCMSDB.GetCMS_AUTO_LOGON();
+            DataTable InstanceIDDT = myFlowDB.GetInstanceID_By_FormName(FormName, TeamID, StartDate, EndDate);
+            if (InstanceIDDT.Rows.Count == 0) return OUTDT;
+            string InstanceID = "";
+            foreach (DataRow DRTemp in InstanceIDDT.Rows)
+            {
+                InstanceID += "," + DRTemp["InstanceID"].ToString();
+            }
+            InstanceID = InstanceID.Substring(1);
+
+            DataTable iMainFormContentDT = myFlowDB.GetXml2Table_By_iMainFormContent(InstanceID.Split(','));
+            DataTable FormFixedFieldDT = myFlowDB.GetFormFixedField(InstanceID.Split(','));
+
+            foreach (DataRow DRTemp in InstanceIDDT.Rows)
+            {
+                DataRow[] iMainFormContentDR = iMainFormContentDT.Select("InstanceID='" + DRTemp["InstanceID"].ToString() + "'");
+                if (iMainFormContentDR.Length == 0) continue;
+                if (iMainFormContentDR[0][Cancel_Type].ToString().LastIndexOfAny("12345".ToCharArray()) < 0) continue;
+
+                DataRow[] FormFixedFieldDR = FormFixedFieldDT.Select("InstanceID='" + DRTemp["InstanceID"].ToString() + "'");
+                if (FormFixedFieldDR.Length == 0) continue;
+
+
+                string IDN1 = FormFixedFieldDR[0]["idCardNumber"].ToString();
+                string Cancel_Type1 = iMainFormContentDR[0][Cancel_Type].ToString();
+                string Type_ID1 = iMainFormContentDR[0][Type_ID].ToString();
+                string CSR_ID1 = FormFixedFieldDR[0]["auditingbillerid"].ToString();
+                string CSR_Term1 = "";
+                DataRow[] CMS_AUTO_LOGONDR = CMS_AUTO_LOGONDT.Select("DTS_UID='" + CSR_ID1 + "'");
+                if (CMS_AUTO_LOGONDR.Length > 0) CSR_Term1 = CMS_AUTO_LOGONDR[0]["Term_ID"].ToString();
+
+                DataRow[] SBI_Auto_Cancel_ReportDR = SBI_Auto_Cancel_ReportDT.Select("IDN='" + IDN1 + "'");
+                DataRow OUTDR = OUTDT.NewRow();
+                OUTDR["IDN"] = IDN1;
+                OUTDR["Cancel_Type"] = Cancel_Type1;
+                if (SBI_Auto_Cancel_ReportDR.Length > 0)
+                {
+                    string Type_ID2 = SBI_Auto_Cancel_ReportDR[0]["Type_ID"].ToString();
+                    string CSR_ID2 = SBI_Auto_Cancel_ReportDR[0]["CSR_ID"].ToString();
+                    string CSR_Term2 = SBI_Auto_Cancel_ReportDR[0]["Term_ID"].ToString();
+
+                    OUTDR["CSR_ID"] = (CSR_ID1 != CSR_ID2 ? CSR_ID1 + "/" + CSR_ID2 : CSR_ID1);
+                    OUTDR["CSR_Term"] = (CSR_Term1 != CSR_Term2 ? CSR_Term1 + "/" + CSR_Term2 : CSR_Term1);
+                    OUTDR["Type_ID"] = (Type_ID1 != Type_ID2 ? Type_ID1 + "/" + Type_ID2 : Type_ID1);
+                    OUTDR["Note"] = (CSR_ID1 != CSR_ID2 ? "AUTOSBI 原 CSR 不一致;" : "") + (CSR_Term1 != CSR_Term2 ? "CSR Team 不一致;" : "") + (Type_ID1 != Type_ID2 ? "變更門檻或期數不一致;" : "");
+                }
+                else
+                {
+                    OUTDR["CSR_ID"] = CSR_ID1 + "/";
+                    OUTDR["CSR_Term"] = CSR_Term1 + "/";
+                    OUTDR["Type_ID"] = Type_ID1 + "/";
+                    OUTDR["Note"] = "Auto SBI 找不到該 CTI 單";
+                }
+                OUTDR["Result"] = (OUTDR["Result"].ToString() == "" ? "Y" : "N");
+                OUTDT.Rows.Add(OUTDR);
+            }
+            return OUTDT;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetAUTO_SBI_Cancel_Summary_Report(string TeamID, string StartDate, string EndDate, string FormName)
+        {
+            Vista.CTI.DataAccess.CMSDB myCMSDB = new Vista.CTI.DataAccess.CMSDB();
+            Vista.CTI.DataAccess.FlowDB myFlowDB = new Vista.CTI.DataAccess.FlowDB();
+            DataTable OUTDT = new DataTable();
+            OUTDT.Columns.Add("CSR_Term"); OUTDT.Columns.Add("CSR_ID"); OUTDT.Columns.Add("Count");
+
+            DataTable CMS_AUTO_LOGONDT = myCMSDB.GetCMS_AUTO_LOGON();
+            DataTable InstanceIDDT = myFlowDB.GetInstanceID_By_FormName(FormName, TeamID, StartDate, EndDate);
+            if (InstanceIDDT.Rows.Count == 0) return OUTDT;
+            string InstanceID = "";
+            foreach (DataRow DRTemp in InstanceIDDT.Rows)
+            {
+                InstanceID += "," + DRTemp["InstanceID"].ToString();
+            }
+            InstanceID = InstanceID.Substring(1);
+
+            DataTable FormFixedFieldDT = myFlowDB.GetFormFixedField(InstanceID.Split(','));
+
+            foreach (DataRow DRTemp in InstanceIDDT.Rows)
+            {
+                DataRow[] FormFixedFieldDR = FormFixedFieldDT.Select("InstanceID='" + DRTemp["InstanceID"].ToString() + "'");
+                if (FormFixedFieldDR.Length == 0) continue;
+
+                string CSR_ID = FormFixedFieldDR[0]["auditingbillerid"].ToString();
+                string CSR_Term = "";
+                DataRow[] CMS_AUTO_LOGONDR = CMS_AUTO_LOGONDT.Select("DTS_UID='" + CSR_ID + "'");
+                if (CMS_AUTO_LOGONDR.Length > 0) CSR_Term = CMS_AUTO_LOGONDR[0]["Term_ID"].ToString();
+
+                if (OUTDT.Select("CSR_Term='" + CSR_Term + "' AND CSR_ID='" + CSR_ID + "'").Length > 0)
+                {
+                    DataRow OUTDR = OUTDT.Select("CSR_Term='" + CSR_Term + "' AND CSR_ID='" + CSR_ID + "'")[0];
+                    OUTDR["Count"] = Convert.ToInt32(OUTDR["Count"].ToString()) + 1;
+                    OUTDT.AcceptChanges();
+                }
+                else
+                {
+                    DataRow OUTDR = OUTDT.NewRow();
+                    OUTDR["CSR_Term"] = CSR_Term;
+                    OUTDR["CSR_ID"] = CSR_ID;
+                    OUTDR["Count"] = 1;
+                    OUTDT.Rows.Add(OUTDR);
+                }
+            }
+            return OUTDT;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public DataSet GetDeviation_Report(string StartDate, string EndDate, string FormName, string AO_Code_Field_ID, string Deviation_Field_ID, string QID_ColumnName, string NID_ColumnName, string CHName_ColumnName, string CSR_ColumnName, string[] ColumnName, string[] kind, string[] Field_ID, DataTable AODataDT, DataTable BranchDT)
+        {
+            Vista.CTI.DataAccess.FlowDB myFlowDB = new Vista.CTI.DataAccess.FlowDB();
+            Vista.CTI.DataAccess.FormFieldPropertyDB myFormFieldPropertyDB = new Vista.CTI.DataAccess.FormFieldPropertyDB();
+
+            DataSet OUTDS = new DataSet();
+
+
+            DataTable DT_Temp = new DataTable();
+            #region DT_Temp
+            DT_Temp.Columns.Add(QID_ColumnName); DT_Temp.Columns.Add(NID_ColumnName); DT_Temp.Columns.Add(CHName_ColumnName); DT_Temp.Columns.Add(CSR_ColumnName);
+
+            if (Field_ID != null)
+            {
+                DataTable Field_IDDT = myFormFieldPropertyDB.GetFormFieldPropertyList(Field_ID);
+                for (int i = 0; i < Field_ID.Length; i++)
+                {
+                    if (ColumnName[i] != "")
+                    {
+                        DT_Temp.Columns.Add(ColumnName[i]);
+                        continue;
+                    }
+
+                    DataRow[] Field_IDDR = Field_IDDT.Select("FieldID='" + Field_ID[i] + "'");
+                    if (Field_IDDR.Length > 0)
+                    {
+                        DT_Temp.Columns.Add(Field_IDDR[0]["LocationName"].ToString());
+                        continue;
+                    }
+
+                    DT_Temp.Columns.Add(Field_ID[i]);
+                }
+            }
+            #endregion
+
+            for (int i = 0; i < BranchDT.Rows.Count; i++)
+            {
+                OUTDS.Tables.Add(DT_Temp.Copy());
+                OUTDS.Tables[i].TableName = BranchDT.Rows[i]["BranchCode"].ToString();
+            }
+
+
+            DataTable InstanceIDDT = myFlowDB.GetInstanceID_By_FormName(FormName, "", StartDate, EndDate);
+            if (InstanceIDDT.Rows.Count == 0) return OUTDS;
+            string InstanceID = "";
+            foreach (DataRow DRTemp in InstanceIDDT.Rows)
+            {
+                InstanceID += "," + DRTemp["InstanceID"].ToString();
+            }
+            InstanceID = InstanceID.Substring(1);
+
+            DataTable iMainFormContentDT = myFlowDB.GetXml2Table_By_iMainFormContent(InstanceID.Split(','));
+            DataTable FormFixedFieldDT = myFlowDB.GetFormFixedField(InstanceID.Split(','));
+
+            foreach (DataRow DRTemp in InstanceIDDT.Rows)
+            {
+                DataRow[] iMainFormContentDR = iMainFormContentDT.Select("InstanceID='" + DRTemp["InstanceID"].ToString() + "' AND " + Deviation_Field_ID + "='Y'");
+                if (iMainFormContentDR.Length == 0) continue;
+
+                DataRow[] FormFixedFieldDR = FormFixedFieldDT.Select("InstanceID='" + DRTemp["InstanceID"].ToString() + "'");
+                if (FormFixedFieldDR.Length == 0) continue;
+
+                DataRow[] AODataDR = AODataDT.Select("AOCode='" + iMainFormContentDR[0][AO_Code_Field_ID].ToString() + "'");
+                if (AODataDR.Length == 0) continue;
+                if (!OUTDS.Tables.Contains(AODataDR[0]["BranchCode"].ToString())) continue;
+                DataTable DT_Temp2 = OUTDS.Tables[AODataDR[0]["BranchCode"].ToString()];
+
+                DataRow OUTDR = DT_Temp2.NewRow();
+                OUTDR[0] = DRTemp["InstanceID"].ToString();
+                OUTDR[1] = FormFixedFieldDR[0]["idCardNumber"].ToString();
+                OUTDR[2] = FormFixedFieldDR[0]["CHI_NAME"].ToString();
+                OUTDR[3] = FormFixedFieldDR[0]["auditingbillerid"].ToString();
+
+                for (int i = 0; i < Field_ID.Length; i++)
+                {
+                    OUTDR[4 + i] = GetFieldValue(iMainFormContentDR[0], FormFixedFieldDR[0], Field_ID[i], kind[i]);
+                }
+                DT_Temp2.Rows.Add(OUTDR);
+            }
+
+
+            return OUTDS;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetMapping_Rule_Report(string StartDate, string EndDate, string FormName, string[] Key, string[] ColumnName, string[] kind, string[] Field_ID, DataTable DT, string[] DT_Field_ID)
+        {
+            Vista.CTI.DataAccess.FlowDB myFlowDB = new Vista.CTI.DataAccess.FlowDB();
+
+            DataTable OUTDT = new DataTable();
+            foreach (string str_temp in Key)
+            {
+                OUTDT.Columns.Add(str_temp);
+            }
+            foreach (string str_temp in ColumnName)
+            {
+                if (!OUTDT.Columns.Contains(str_temp)) OUTDT.Columns.Add(str_temp);
+            }
+            OUTDT.Columns.Add("Result"); OUTDT.Columns.Add("Note");
+
+            int[] ColumnNameNO = new int[ColumnName.Length];
+            for (int i = 0; i < OUTDT.Columns.Count - 2; i++)
+            {
+                for (int j = 0; j < ColumnName.Length; j++)
+                {
+                    if (OUTDT.Columns[i].ColumnName == ColumnName[j]) ColumnNameNO[i] = j;
+                }
+            }
+
+
+            DataTable InstanceIDDT = myFlowDB.GetInstanceID_By_FormName(FormName, "", StartDate, EndDate);
+            if (InstanceIDDT.Rows.Count == 0) return OUTDT;
+            string InstanceID = "";
+            foreach (DataRow DRTemp in InstanceIDDT.Rows)
+            {
+                InstanceID += "," + DRTemp["InstanceID"].ToString();
+            }
+            InstanceID = InstanceID.Substring(1);
+
+            DataTable iMainFormContentDT = myFlowDB.GetXml2Table_By_iMainFormContent(InstanceID.Split(','));
+            DataTable FormFixedFieldDT = myFlowDB.GetFormFixedField(InstanceID.Split(','));
+
+            foreach (DataRow DRTemp in InstanceIDDT.Rows)
+            {
+                DataRow[] iMainFormContentDR = iMainFormContentDT.Select("InstanceID='" + DRTemp["InstanceID"].ToString() + "'");
+                if (iMainFormContentDR.Length == 0) continue;
+
+                DataRow[] FormFixedFieldDR = FormFixedFieldDT.Select("InstanceID='" + DRTemp["InstanceID"].ToString() + "'");
+                if (FormFixedFieldDR.Length == 0) continue;
+
+                DataRow OUTDR = OUTDT.NewRow();
+
+                string Where = "";
+                for (int i = 0; i < Key.Length; i++)
+                {
+                    int NO_Temp = ColumnNameNO[i];
+                    Where += " AND " + DT_Field_ID[NO_Temp] + "='" + GetFieldValue(iMainFormContentDR[0], FormFixedFieldDR[0], Field_ID[NO_Temp].ToString()) + "'";
+                    OUTDR[i] = GetFieldValue(iMainFormContentDR[0], FormFixedFieldDR[0], Field_ID[NO_Temp].ToString());
+                }
+                Where = Where.Substring(5);
+
+                DataRow[] DR = DT.Select(Where);
+                if (DR.Length == 0)
+                {
+                    for (int i = Key.Length; i < OUTDT.Columns.Count - 2; i++)
+                    {
+                        int NO_Temp = ColumnNameNO[i];
+                        if (Field_ID[NO_Temp] == "") continue;
+
+                        OUTDR[i] = GetFieldValue(iMainFormContentDR[0], FormFixedFieldDR[0], Field_ID[NO_Temp], kind[i]) + "/";
+                    }
+                    OUTDR["Note"] = "找不到該筆;";
+                }
+                else
+                {
+                    for (int i = Key.Length; i < OUTDT.Columns.Count - 2; i++)
+                    {
+                        int NO_Temp = ColumnNameNO[i];
+                        if (Field_ID[NO_Temp] == "") continue;
+                        string s1 = GetFieldValue(iMainFormContentDR[0], FormFixedFieldDR[0], Field_ID[NO_Temp], kind[i]);
+                        string s2 = DR[0][DT_Field_ID[NO_Temp]].ToString();
+                        OUTDR[i] = (s1 != s2 ? s1 + "/" + s2 : s1);
+                        OUTDR["Note"] = OUTDR["Note"].ToString() + (s1 != s2 ? ColumnName[NO_Temp] + "不一致;" : "");
+                    }
+                }
+                OUTDR["Result"] = (OUTDR["Result"].ToString() == "" ? "Y" : "N");
+                OUTDT.Rows.Add(OUTDR);
+            }
+            return OUTDT;
+        }
+
+        protected string GetFieldValue(DataRow iMainFormContentDR, DataRow FormFixedFieldDR, string Field_ID, string kind)
+        {
+            if (Field_ID == "") return "";
+            string outstr = "";
+            string[] kindTemp = kind.Split(';');
+            switch (kindTemp[0].ToUpper())
+            {
+                case "CASE":
+                    string strtemp = GetFieldValue(iMainFormContentDR, FormFixedFieldDR, Field_ID);
+                    for (int i = 1; i > kindTemp.Length; i++)
+                    {
+                        if (kindTemp[i].StartsWith(strtemp + ":")) outstr = kindTemp[i].Substring((strtemp + ":").Length);
+                    }
+                    break;
+                case "ADD":
+                    Field_ID.Replace(';', ',');
+
+                    outstr = "0";
+                    foreach (string FieldID in Field_ID.Split(','))
+                    {
+                        outstr = (Convert.ToDecimal(outstr) + Convert.ToDecimal("0" + GetFieldValue(iMainFormContentDR, FormFixedFieldDR, FieldID))).ToString();
+                    }
+                    break;
+                default:
+                    outstr = GetFieldValue(iMainFormContentDR, FormFixedFieldDR, Field_ID);
+                    break;
+            }
+            return outstr;
+        }
+
+        protected string GetFieldValue(DataRow iMainFormContentDR, DataRow FormFixedFieldDR, string Field_ID)
+        {
+            if (FormFixedFieldDR.Table.Columns.Contains(Field_ID))
+            {
+                return FormFixedFieldDR[Field_ID].ToString();
+            }
+            else if (iMainFormContentDR.Table.Columns.Contains(Field_ID))
+            {
+                return iMainFormContentDR[Field_ID].ToString();
+            }
+            else
+            {
+                throw new Exception("Not Field ID");
+            }
+        }
+        #endregion
+
+        #region CTIW1745
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public class CTIW1745Config
+        {
+            public class CSR_Attrition_Reason_Config
+            {
+                public string[] locationvalue { get; set; }
+                public string[] FormName { get; set; }
+                public string[] Field_ID { get; set; }
+            }
+            public CSR_Attrition_Reason_Config CSR_Attrition_Reason_Config1 { get; set; }
+            public CSR_Attrition_Reason_Config CSR_Attrition_Reason_Config2 { get; set; }
+            public CTIW1745Config()
+            {
+                CSR_Attrition_Reason_Config1 = new CSR_Attrition_Reason_Config();
+                CSR_Attrition_Reason_Config2 = new CSR_Attrition_Reason_Config();
+
+                #region 取的參數XML
+                Vista.CTI.DataAccess.SystemParameterDB mySystemParameterDB = new Vista.CTI.DataAccess.SystemParameterDB();
+                DataTable XMLDT = mySystemParameterDB.GetSystemParameter("CustomizedReport", "CTIW1745", null, null, null);
+                if (XMLDT.Rows.Count == 0) throw new Exception("參數錯誤(1)");
+
+                string XML = XMLDT.Rows[0]["VAR2"].ToString();
+                XmlDocument doc = new XmlDocument(); doc.LoadXml(XML);
+                XmlNode CTIW1745 = doc.DocumentElement;
+                #endregion
+
+                CSR_Attrition_Reason_Config CSR_Attrition_Reason_Config_Temp;
+
+                if (CTIW1745.SelectSingleNode("CSR_Attrition_Reason_1") == null) throw new Exception("參數錯誤(2)");
+                XmlNode CSR_Attrition_Reason1 = CTIW1745.SelectSingleNode("CSR_Attrition_Reason_1");
+                CSR_Attrition_Reason_Config_Temp = GetCSR_Attrition_Reason_Config("2", CSR_Attrition_Reason1);
+                CSR_Attrition_Reason_Config1.locationvalue = CopyStringArray(CSR_Attrition_Reason_Config_Temp.locationvalue);
+                CSR_Attrition_Reason_Config1.FormName = CopyStringArray(CSR_Attrition_Reason_Config_Temp.FormName);
+                CSR_Attrition_Reason_Config1.Field_ID = CopyStringArray(CSR_Attrition_Reason_Config_Temp.Field_ID);
+
+                if (CTIW1745.SelectSingleNode("CSR_Attrition_Reason_2") == null) throw new Exception("參數錯誤(3)");
+                XmlNode CSR_Attrition_Reason2 = CTIW1745.SelectSingleNode("CSR_Attrition_Reason_2");
+                CSR_Attrition_Reason_Config_Temp = GetCSR_Attrition_Reason_Config("3", CSR_Attrition_Reason2);
+                CSR_Attrition_Reason_Config2.locationvalue = CopyStringArray(CSR_Attrition_Reason_Config_Temp.locationvalue);
+                CSR_Attrition_Reason_Config2.FormName = CopyStringArray(CSR_Attrition_Reason_Config_Temp.FormName);
+                CSR_Attrition_Reason_Config2.Field_ID = CopyStringArray(CSR_Attrition_Reason_Config_Temp.Field_ID);
+            }
+
+            public CSR_Attrition_Reason_Config GetCSR_Attrition_Reason_Config(string ErrorNO, XmlNode CSR_Attrition_Reason)
+            {
+                CSR_Attrition_Reason_Config CSR_Attrition_Reason_Config_Temp = new CSR_Attrition_Reason_Config();
+
+                int num;
+                XmlNode locationvalues = CSR_Attrition_Reason.SelectSingleNode("locationvalues");
+                if (CSR_Attrition_Reason.SelectSingleNode("FormNames") == null) throw new Exception("參數錯誤(" + ErrorNO + "-1)");
+                XmlNode FormNames = CSR_Attrition_Reason.SelectSingleNode("FormNames");
+
+                #region locationvalues
+                CSR_Attrition_Reason_Config_Temp.locationvalue = null;
+                if (locationvalues != null)
+                {
+                    num = int.MaxValue;
+                    if (locationvalues.Attributes["num"] != null)
+                        if (!Int32.TryParse(locationvalues.Attributes["num"].Value, out  num)) throw new Exception("參數錯誤(" + ErrorNO + "-1)");
+                    if (num != 0)
+                    {
+                        List<string> locationvalue = new List<string>();
+                        foreach (XmlNode XmlNodeTemp in locationvalues.SelectNodes("locationvalue"))
+                        {
+                            if (num <= 0) break;
+                            if (XmlNodeTemp.InnerText == "") throw new Exception("參數錯誤(" + ErrorNO + "-1)");
+                            locationvalue.Add(XmlNodeTemp.InnerText);
+                            num--;
+                        }
+                        if (locationvalue.Count != 0) CSR_Attrition_Reason_Config_Temp.locationvalue = locationvalue.ToArray();
+                    }
+                }
+                #endregion
+
+                #region FormNames
+                CSR_Attrition_Reason_Config_Temp.FormName = null;
+                CSR_Attrition_Reason_Config_Temp.Field_ID = null;
+                num = int.MaxValue;
+                if (FormNames.Attributes["num"] != null)
+                    if (!Int32.TryParse(FormNames.Attributes["num"].Value, out  num)) throw new Exception("參數錯誤(" + ErrorNO + "-2)");
+                if (num == 0) throw new Exception("參數錯誤(" + ErrorNO + "-2)");
+                List<string> FormName = new List<string>();
+                List<string> Field_ID = new List<string>();
+
+                foreach (XmlNode XmlNodeTemp in FormNames.SelectNodes("FormName"))
+                {
+                    if (num <= 0) break;
+                    if (XmlNodeTemp.InnerText == "") throw new Exception("參數錯誤(" + ErrorNO + "-3)");
+                    if (XmlNodeTemp.Attributes["Field_ID"] == null) throw new Exception("參數錯誤(" + ErrorNO + "-3)");
+                    if (XmlNodeTemp.Attributes["Field_ID"].Value == "") throw new Exception("參數錯誤(" + ErrorNO + "-3)");
+
+
+                    FormName.Add(XmlNodeTemp.InnerText);
+                    Field_ID.Add(XmlNodeTemp.Attributes["Field_ID"].Value);
+                    num--;
+                }
+                if (FormName.Count == 0) throw new Exception("參數錯誤(" + ErrorNO + "-3)");
+                CSR_Attrition_Reason_Config_Temp.FormName = FormName.ToArray();
+                CSR_Attrition_Reason_Config_Temp.Field_ID = Field_ID.ToArray();
+                #endregion
+
+                return CSR_Attrition_Reason_Config_Temp;
+            }
+
+            public string[] CopyStringArray(string[] sStr)
+            {
+                if (sStr == null) return null;
+                string[] oStr = new string[sStr.Length];
+                for (int i = 0; i < sStr.Length; i++)
+                {
+                    oStr[i] = sStr[i];
+                }
+                return oStr;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetCancel_Credit_Card_Report(string StartTime, string EndTime, CTIW1745Config.CSR_Attrition_Reason_Config Config)
+        {
+            return GetCancel_Credit_Card_Report(Config.locationvalue, StartTime, EndTime, Config.FormName, Config.Field_ID);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetCancel_Credit_Card_Report(string CancelTypes, string StartTime, string EndTime, CTIW1745Config.CSR_Attrition_Reason_Config Config)
+        {
+            return GetCancel_Credit_Card_Report(CancelTypes.Split(','), StartTime, EndTime, Config.FormName, Config.Field_ID);
+        }
+        #endregion
+
+        #region CTIW1755
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public class CTIW1755Config
+        {
+            public string FormName { get; set; }
+            public class Auto_SBI_Cancel_Mapping_Rule_Config
+            {
+                public string Cancel_Type { get; set; }
+                public string Type_ID { get; set; }
+            }
+            public Auto_SBI_Cancel_Mapping_Rule_Config Mapping_Rule_Config { get; set; }
+            public CTIW1755Config()
+            {
+                Mapping_Rule_Config = new Auto_SBI_Cancel_Mapping_Rule_Config();
+
+                #region 取的參數XML
+                Vista.CTI.DataAccess.SystemParameterDB mySystemParameterDB = new Vista.CTI.DataAccess.SystemParameterDB();
+                DataTable XMLDT = mySystemParameterDB.GetSystemParameter("CustomizedReport", "CTIW1755", null, null, null);
+                if (XMLDT.Rows.Count == 0) throw new Exception("參數錯誤(1)");
+
+                string XML = XMLDT.Rows[0]["VAR2"].ToString();
+                XmlDocument doc = new XmlDocument(); doc.LoadXml(XML);
+                XmlNode CTIW1755 = doc.DocumentElement;
+                #endregion
+
+                if (CTIW1755.SelectSingleNode("FormName") == null) if (XMLDT.Rows.Count == 0) throw new Exception("參數錯誤(2)");
+                FormName = CTIW1755.SelectSingleNode("FormName").InnerText;
+
+                if (CTIW1755.SelectSingleNode("Auto_SBI_Cancel_Mapping_Rule_Report") != null) if (XMLDT.Rows.Count == 0) throw new Exception("參數錯誤(3)");
+                XmlNode Auto_SBI_Cancel_Mapping_Rule_Report = CTIW1755.SelectSingleNode("Auto_SBI_Cancel_Mapping_Rule_Report");
+
+                if (Auto_SBI_Cancel_Mapping_Rule_Report.SelectSingleNode("Cancel_Type") == null) throw new Exception("參數錯誤(4)");
+                Mapping_Rule_Config.Cancel_Type = Auto_SBI_Cancel_Mapping_Rule_Report.SelectSingleNode("Cancel_Type").InnerText;
+
+                if (Auto_SBI_Cancel_Mapping_Rule_Report.SelectSingleNode("Type_ID") == null) throw new Exception("參數錯誤(5)");
+                Mapping_Rule_Config.Type_ID = Auto_SBI_Cancel_Mapping_Rule_Report.SelectSingleNode("Type_ID").InnerText;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetAuto_SBI_Cancel_Mapping_Rule_Report(string TeamID, string StartDate, string EndDate, CTIW1755Config Config)
+        {
+            return GetAuto_SBI_Cancel_Mapping_Rule_Report(TeamID, StartDate, EndDate, Config.FormName, Config.Mapping_Rule_Config.Cancel_Type, Config.Mapping_Rule_Config.Type_ID);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetAUTO_SBI_Cancel_Summary_Report(string TeamID, string StartDate, string EndDate, CTIW1755Config Config)
+        {
+            return GetAUTO_SBI_Cancel_Summary_Report(TeamID, StartDate, EndDate, Config.FormName);
+        }
+        #endregion
+
+        #region CTIW1760
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public class CTIW1760Config
+        {
+            public class Column_Config
+            {
+                public string ColumnName { get; set; }
+                public string kind { get; set; }
+                public string Field_ID { get; set; }
+            }
+            public class FormName_Config
+            {
+                public string FormName { get; set; }
+                public string AO_Code_Field_ID { get; set; }
+                public string Deviation_Field_ID { get; set; }
+
+                public string QID_ColumnName { get; set; }
+                public string NID_ColumnName { get; set; }
+                public string CHName_ColumnName { get; set; }
+                public string CSR_ColumnName { get; set; }
+
+                public Column_Config[] Column { get; set; }
+                public string[] ColumnName
+                {
+                    get
+                    {
+                        if (Column == null) return null;
+                        if (Column.Length == 0) return null;
+                        string[] Temp = new string[Column.Length];
+                        for (int i = 0; i < Column.Length; i++)
+                        {
+                            Temp[i] = Column[i].ColumnName;
+                        }
+                        return Temp;
+                    }
+                }
+                public string[] kind
+                {
+                    get
+                    {
+                        if (Column == null) return null;
+                        if (Column.Length == 0) return null;
+                        string[] Temp = new string[Column.Length];
+                        for (int i = 0; i < Column.Length; i++)
+                        {
+                            Temp[i] = Column[i].kind;
+                        }
+                        return Temp;
+                    }
+                }
+                public string[] Field_ID
+                {
+                    get
+                    {
+                        if (Column == null) return null;
+                        if (Column.Length == 0) return null;
+                        string[] Temp = new string[Column.Length];
+                        for (int i = 0; i < Column.Length; i++)
+                        {
+                            Temp[i] = Column[i].Field_ID;
+                        }
+                        return Temp;
+                    }
+                }
+            }
+            public FormName_Config[] FormName_Config1 { get; set; }
+            public CTIW1760Config()
+            {
+                #region 取的參數XML
+                Vista.CTI.DataAccess.SystemParameterDB mySystemParameterDB = new Vista.CTI.DataAccess.SystemParameterDB();
+                DataTable XMLDT = mySystemParameterDB.GetSystemParameter("CustomizedReport", "CTIW1760", null, null, null);
+                if (XMLDT.Rows.Count == 0) throw new Exception("參數錯誤(1)");
+
+                string XML = XMLDT.Rows[0]["VAR2"].ToString();
+                XmlDocument doc = new XmlDocument(); doc.LoadXml(XML);
+                XmlNode CTIW1760 = doc.DocumentElement;
+                #endregion
+
+                int num;
+                if (CTIW1760.SelectSingleNode("FormNames") == null) throw new Exception("參數錯誤(2)");
+                XmlNode FormNames = CTIW1760.SelectSingleNode("FormNames");
+                num = int.MaxValue;
+                if (FormNames.Attributes["num"] != null)
+                    if (!Int32.TryParse(FormNames.Attributes["num"].Value, out  num)) throw new Exception("參數錯誤(2-1)");
+                if (num == 0) throw new Exception("參數錯誤(2-1)");
+
+                List<FormName_Config> FormName_Config_Temp = new List<FormName_Config>();
+                int ErrorNO = 1;
+                foreach (XmlNode XmlNodeTemp in FormNames.SelectNodes("FormName"))
+                {
+                    if (num <= 0) break;
+                    FormName_Config_Temp.Add(GetFormName_Config("3-" + ErrorNO.ToString(), XmlNodeTemp));
+                    num--;
+                    ErrorNO++;
+                }
+                if (FormName_Config_Temp.Count == 0) throw new Exception("參數錯誤(4)");
+                FormName_Config1 = FormName_Config_Temp.ToArray();
+            }
+            public FormName_Config GetFormName_Config(string ErrorNO, XmlNode FormName)
+            {
+                FormName_Config FormName_Config_Temp = new FormName_Config();
+
+                if (FormName.Attributes["Name"] == null) throw new Exception("參數錯誤(" + ErrorNO + "-1)");
+                if (FormName.Attributes["Name"].Value == "") throw new Exception("參數錯誤(" + ErrorNO + "-1)");
+                if (FormName.Attributes["AO_Code_Field_ID"] == null) throw new Exception("參數錯誤(" + ErrorNO + "-1)");
+                if (FormName.Attributes["AO_Code_Field_ID"].Value == "") throw new Exception("參數錯誤(" + ErrorNO + "-1)");
+                if (FormName.Attributes["Deviation_Field_ID"] == null) throw new Exception("參數錯誤(" + ErrorNO + "-1)");
+                if (FormName.Attributes["Deviation_Field_ID"].Value == "") throw new Exception("參數錯誤(" + ErrorNO + "-1)");
+
+                FormName_Config_Temp.FormName = FormName.Attributes["Name"].Value;
+                FormName_Config_Temp.AO_Code_Field_ID = FormName.Attributes["AO_Code_Field_ID"].Value;
+                FormName_Config_Temp.Deviation_Field_ID = FormName.Attributes["Deviation_Field_ID"].Value;
+
+                FormName_Config_Temp.QID_ColumnName = "問題單編號";
+                if (FormName.Attributes["QID_ColumnName"] != null) FormName_Config_Temp.QID_ColumnName = FormName.Attributes["QID_ColumnName"].Value;
+
+                FormName_Config_Temp.NID_ColumnName = "客戶ID";
+                if (FormName.Attributes["NID_ColumnName"] != null) FormName_Config_Temp.NID_ColumnName = FormName.Attributes["NID_ColumnName"].Value;
+
+                FormName_Config_Temp.CHName_ColumnName = "客戶姓名";
+                if (FormName.Attributes["CHName_ColumnName"] != null) FormName_Config_Temp.CHName_ColumnName = FormName.Attributes["CHName_ColumnName"].Value;
+
+                FormName_Config_Temp.CSR_ColumnName = "處理者姓名";
+                if (FormName.Attributes["CSR_ColumnName"] != null) FormName_Config_Temp.CSR_ColumnName = FormName.Attributes["CSR_ColumnName"].Value;
+
+                #region Column
+                FormName_Config_Temp.Column = null;
+                XmlNode Columns = FormName.SelectSingleNode("Columns");
+                if (Columns != null)
+                {
+                    int num = int.MaxValue;
+                    if (Columns.Attributes["num"] != null)
+                        if (!Int32.TryParse(Columns.Attributes["num"].Value, out  num)) throw new Exception("參數錯誤(" + ErrorNO + "-2)");
+                    if (num != 0)
+                    {
+                        List<Column_Config> Column = new List<Column_Config>();
+                        foreach (XmlNode XmlNodeTemp in Columns.SelectNodes("Column"))
+                        {
+                            if (num <= 0) break;
+                            Column_Config Column_Config_Temp = new Column_Config();
+
+                            if (XmlNodeTemp.Attributes["Field_ID"] == null) throw new Exception("參數錯誤(" + ErrorNO + "-3)");
+                            if (XmlNodeTemp.Attributes["Field_ID"].Value == "") throw new Exception("參數錯誤(" + ErrorNO + "-3)");
+                            Column_Config_Temp.Field_ID = XmlNodeTemp.Attributes["Field_ID"].Value.Trim();
+
+                            Column_Config_Temp.kind = "";
+                            if (XmlNodeTemp.Attributes["kind"] != null) Column_Config_Temp.kind = XmlNodeTemp.Attributes["kind"].Value.Trim();
+
+                            Column_Config_Temp.ColumnName = XmlNodeTemp.InnerText.Trim();
+                            if (Column_Config_Temp.kind != "" && Column_Config_Temp.ColumnName == "") Column_Config_Temp.ColumnName = Column_Config_Temp.Field_ID;
+
+                            Column.Add(Column_Config_Temp);
+                            num--;
+                        }
+                        if (Column.Count != 0) FormName_Config_Temp.Column = Column.ToArray();
+                    }
+                }
+                #endregion
+                return FormName_Config_Temp;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public DataSet[] GetDeviation_Report(string StartDate, string EndDate, CTIW1760Config Config)
+        {
+            Vista.CTI.DataAccess.ReportQueryDB myReportQueryDB = new Vista.CTI.DataAccess.ReportQueryDB();
+            DataTable BranchDT = myReportQueryDB.GetBranch();
+            DataTable AODataDT = myReportQueryDB.GetAOData(StartDate, EndDate);
+            DataSet[] OUTDS = new DataSet[BranchDT.Rows.Count];
+            for (int i = 0; i < BranchDT.Rows.Count; i++)
+            {
+                OUTDS[i] = new DataSet();
+                OUTDS[i].DataSetName = BranchDT.Rows[i]["BranchCode"].ToString();
+            }
+
+            for (int i = 0; i < Config.FormName_Config1.Length; i++)
+            {
+                CTIW1760Config.FormName_Config FormName_Config_Temp = Config.FormName_Config1[i];
+                DataSet DS_Temp = GetDeviation_Report(StartDate, EndDate, FormName_Config_Temp.FormName, FormName_Config_Temp.AO_Code_Field_ID, FormName_Config_Temp.Deviation_Field_ID, FormName_Config_Temp.QID_ColumnName, FormName_Config_Temp.NID_ColumnName, FormName_Config_Temp.CHName_ColumnName, FormName_Config_Temp.CSR_ColumnName, FormName_Config_Temp.ColumnName, FormName_Config_Temp.kind, FormName_Config_Temp.Field_ID, AODataDT, BranchDT);
+
+                string _FormName = new Vista.CTI.DataAccess.FormDefineDB().GetFillFormName(FormName_Config_Temp.FormName);
+                for (int j = 0; j < BranchDT.Rows.Count; j++)
+                {
+                    OUTDS[j].Tables.Add(DS_Temp.Tables[OUTDS[j].DataSetName].Copy());
+                    OUTDS[j].Tables[OUTDS[j].DataSetName].TableName = _FormName;
+                }
+            }
+
+            return OUTDS;
+        }
+
+        public string ExportCTIW1760(string StartDate, string EndDate)
+        {
+            string OutputPath = System.Web.HttpContext.Current.Server.MapPath("~\\Output\\");
+
+            ReportQueryBiz.CTIW1760Config Config = new ReportQueryBiz.CTIW1760Config();
+            ReportQueryBiz myReportQueryBiz = new ReportQueryBiz();
+            DataSet[] ReportDS = myReportQueryBiz.GetDeviation_Report(StartDate, EndDate, Config);
+
+            List<string> OutputInfo = new List<string>();
+            foreach (DataSet dsInput in ReportDS)
+            {
+                string FileTemp = Path.Combine(OutputPath, "Call_Center_deviation_" + dsInput.DataSetName + "_" + DateTime.Now.ToString("yyyyMMdd") + ".xls");
+                Vista.Common.NPOIExport _NPOI = new Vista.Common.NPOIExport();
+                _NPOI.ExportFile(dsInput, FileTemp);
+                OutputInfo.Add(FileTemp);
+            }
+            string ZIPFileName = "Call_Center_deviation_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".zip";
+            Vista.Common.ZipTool.ZipFiles(OutputInfo.ToArray(), Path.Combine(OutputPath, ZIPFileName), "");
+
+            foreach (string File_Temp in OutputInfo.ToArray())
+            {
+                if (File.Exists(File_Temp)) File.Delete(File_Temp);
+            }
+
+            return Path.Combine(OutputPath, ZIPFileName);
+        }
+        #endregion
+
+        #region Mapping_ReportConfig
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public class Mapping_ReportConfig
+        {
+            public class Column_Config
+            {
+                public string ColumnName { get; set; }
+                public string kind { get; set; }
+                public string Field_ID { get; set; }
+            }
+            public class FormName_Config
+            {
+                public string FormName { get; set; }
+                public string[] Key;
+                public Column_Config[] Column { get; set; }
+                public string[] ColumnName
+                {
+                    get
+                    {
+                        if (Column == null) return null;
+                        if (Column.Length == 0) return null;
+                        string[] Temp = new string[Column.Length];
+                        for (int i = 0; i < Column.Length; i++)
+                        {
+                            Temp[i] = Column[i].ColumnName;
+                        }
+                        return Temp;
+                    }
+                }
+                public string[] kind
+                {
+                    get
+                    {
+                        if (Column == null) return null;
+                        if (Column.Length == 0) return null;
+                        string[] Temp = new string[Column.Length];
+                        for (int i = 0; i < Column.Length; i++)
+                        {
+                            Temp[i] = Column[i].kind;
+                        }
+                        return Temp;
+                    }
+                }
+                public string[] Field_ID
+                {
+                    get
+                    {
+                        if (Column == null) return null;
+                        if (Column.Length == 0) return null;
+                        string[] Temp = new string[Column.Length];
+                        for (int i = 0; i < Column.Length; i++)
+                        {
+                            Temp[i] = Column[i].Field_ID;
+                        }
+                        return Temp;
+                    }
+                }
+
+                public Column_Config[] DT_Column_Config { get; set; }
+                public string[] DT_Field_ID
+                {
+                    get
+                    {
+                        if (DT_Column_Config == null) return null;
+                        if (DT_Column_Config.Length == 0) return null;
+                        string[] Temp = new string[DT_Column_Config.Length];
+                        for (int i = 0; i < DT_Column_Config.Length; i++)
+                        {
+                            Temp[i] = DT_Column_Config[i].Field_ID;
+                        }
+                        return Temp;
+                    }
+                }
+            }
+
+            public FormName_Config[] FormName_Config1 { get; set; }
+
+            public Mapping_ReportConfig(string VAR1)
+            {
+                #region 取的參數XML
+                Vista.CTI.DataAccess.SystemParameterDB mySystemParameterDB = new Vista.CTI.DataAccess.SystemParameterDB();
+                DataTable XMLDT = mySystemParameterDB.GetSystemParameter("CustomizedReport", VAR1, null, null, null);
+                if (XMLDT.Rows.Count == 0) throw new Exception("參數錯誤(1)");
+
+                string XML = XMLDT.Rows[0]["VAR2"].ToString();
+                XmlDocument doc = new XmlDocument(); doc.LoadXml(XML);
+                XmlNode CTIW1765 = doc.DocumentElement;
+                #endregion
+
+                int num;
+                if (CTIW1765.SelectSingleNode("FormNames") == null) throw new Exception("參數錯誤(2)");
+                XmlNode FormNames = CTIW1765.SelectSingleNode("FormNames");
+                num = int.MaxValue;
+                if (FormNames.Attributes["num"] != null)
+                    if (!Int32.TryParse(FormNames.Attributes["num"].Value, out  num)) throw new Exception("參數錯誤(2-1)");
+                if (num == 0) throw new Exception("參數錯誤(2-1)");
+
+                List<FormName_Config> FormName_Config_Temp = new List<FormName_Config>();
+                int ErrorNO = 1;
+                foreach (XmlNode XmlNodeTemp in FormNames.SelectNodes("FormName"))
+                {
+                    if (num <= 0) break;
+                    FormName_Config_Temp.Add(GetFormName_Config("3-" + ErrorNO.ToString(), XmlNodeTemp));
+                    num--;
+                    ErrorNO++;
+                }
+                if (FormName_Config_Temp.Count == 0) throw new Exception("參數錯誤(4)");
+                FormName_Config1 = FormName_Config_Temp.ToArray();
+            }
+            public FormName_Config GetFormName_Config(string ErrorNO, XmlNode FormName)
+            {
+                FormName_Config FormName_Config_Temp = new FormName_Config();
+
+                if (FormName.Attributes["Name"] == null) throw new Exception("參數錯誤(" + ErrorNO + "-1)");
+                if (FormName.Attributes["Name"].Value == "") throw new Exception("參數錯誤(" + ErrorNO + "-1)");
+
+                FormName_Config_Temp.FormName = FormName.Attributes["Name"].Value;
+
+                #region Field
+                FormName_Config_Temp.Column = null;
+                XmlNode Fields = FormName.SelectSingleNode("Fields");
+                if (Fields == null) throw new Exception("參數錯誤(" + ErrorNO + "-2)");
+
+                int num = int.MaxValue;
+                if (Fields.Attributes["num"] != null)
+                    if (!Int32.TryParse(Fields.Attributes["num"].Value, out  num)) throw new Exception("參數錯誤(" + ErrorNO + "-3)");
+                if (num <= 0) throw new Exception("參數錯誤(" + ErrorNO + "-3)");
+
+                List<Column_Config> Column = new List<Column_Config>();
+                List<Column_Config> Excle_Column = new List<Column_Config>();
+                List<string> Key = new List<string>();
+                foreach (XmlNode XmlNodeTemp in Fields.SelectNodes("Field"))
+                {
+                    if (num <= 0) break;
+                    Column_Config Column_Config_Temp = new Column_Config();
+                    Column_Config Excle_Column_Config_Temp = new Column_Config();
+
+                    if (XmlNodeTemp.Attributes["name"] == null) throw new Exception("參數錯誤(" + ErrorNO + "-3)");
+                    if (XmlNodeTemp.Attributes["name"].Value == "") throw new Exception("參數錯誤(" + ErrorNO + "-3)");
+                    Column_Config_Temp.ColumnName = XmlNodeTemp.Attributes["name"].Value.Trim();
+                    Excle_Column_Config_Temp.ColumnName = XmlNodeTemp.Attributes["name"].Value.Trim();
+
+                    if (XmlNodeTemp.Attributes["Key"] != null)
+                        if (XmlNodeTemp.Attributes["Key"].Value.ToUpper() == "KEY") Key.Add(XmlNodeTemp.Attributes["name"].Value.Trim());
+
+                    if (XmlNodeTemp.SelectSingleNode("Excle") == null) throw new Exception("參數錯誤(" + ErrorNO + "-4)");
+                    XmlNode Excle = XmlNodeTemp.SelectSingleNode("Excle");
+                    if (Excle.InnerText.Trim() == "") throw new Exception("參數錯誤(" + ErrorNO + "-4)");
+                    Excle_Column_Config_Temp.Field_ID = Excle.InnerText.Trim();
+
+                    if (XmlNodeTemp.SelectSingleNode("FieldID") == null) throw new Exception("參數錯誤(" + ErrorNO + "-5)");
+                    XmlNode FieldID = XmlNodeTemp.SelectSingleNode("FieldID");
+
+                    Column_Config_Temp.kind = "";
+                    if (FieldID.Attributes["kind"] != null) Column_Config_Temp.kind = FieldID.Attributes["kind"].Value.Trim();
+
+                    //if (FieldID.InnerText.Trim() == "") throw new Exception("參數錯誤(" + ErrorNO + "-5)");
+                    Column_Config_Temp.Field_ID = FieldID.InnerText.Trim();
+
+
+                    Column.Add(Column_Config_Temp);
+                    Excle_Column.Add(Excle_Column_Config_Temp);
+                    num--;
+                }
+                if (Key.Count == 0) throw new Exception("參數錯誤(" + ErrorNO + "-6)");
+                FormName_Config_Temp.Key = Key.ToArray();
+
+                if (Column.Count == 0) throw new Exception("參數錯誤(" + ErrorNO + "-7)");
+                FormName_Config_Temp.Column = Column.ToArray();
+                FormName_Config_Temp.DT_Column_Config = Excle_Column.ToArray();
+                #endregion
+                return FormName_Config_Temp;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetMapping_Rule_Report(string StartDate, string EndDate, DataTable DT, Mapping_ReportConfig.FormName_Config config)
+        {
+            switch (config.FormName.Substring(0, 8))
+            {
+                case "B008-021":
+                case "B008-022":
+                case "B008-023":
+                case "B008-024":
+                    if (StartDate != "") StartDate = Convert.ToDateTime(StartDate).AddDays(-1).ToString("yyyy/MM/dd");
+                    if (EndDate != "") EndDate = Convert.ToDateTime(EndDate).AddDays(-1).ToString("yyyy/MM/dd");
+                    break;
+            }
+            return GetMapping_Rule_Report(StartDate, EndDate, config.FormName, config.Key, config.ColumnName, config.kind, config.Field_ID, DT, config.DT_Field_ID);
+        }
+        #endregion
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetAML1_FIELD_UPDATE(string StartTime, string EndTime)
+        {
+            Vista.CTI.DataAccess.CMSDB myCMSDB = new Vista.CTI.DataAccess.CMSDB();
+            return myCMSDB.GetAML1_FIELD_UPDATE(StartTime, EndTime);
+
+        }
+
+        #region CTIW1780
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public class CTIW1780Config
+        {
+            public class Column_Config
+            {
+                public string ColumnName { get; set; }
+                public string ColumnName2 { get; set; }
+                public string kind { get; set; }
+                public string Field_ID { get; set; }
+            }
+            public class FormName_Config
+            {
+                public string FormName { get; set; }
+                public string Title { get; set; }
+
+                public Column_Config[] Column { get; set; }
+                public string[] ColumnName
+                {
+                    get
+                    {
+                        if (Column == null) return null;
+                        if (Column.Length == 0) return null;
+                        string[] Temp = new string[Column.Length];
+                        for (int i = 0; i < Column.Length; i++)
+                        {
+                            Temp[i] = Column[i].ColumnName2 + ";" + Column[i].ColumnName;
+                        }
+                        return Temp;
+                    }
+                }
+                public string[] kind
+                {
+                    get
+                    {
+                        if (Column == null) return null;
+                        if (Column.Length == 0) return null;
+                        string[] Temp = new string[Column.Length];
+                        for (int i = 0; i < Column.Length; i++)
+                        {
+                            Temp[i] = Column[i].kind;
+                        }
+                        return Temp;
+                    }
+                }
+                public string[] Field_ID
+                {
+                    get
+                    {
+                        if (Column == null) return null;
+                        if (Column.Length == 0) return null;
+                        string[] Temp = new string[Column.Length];
+                        for (int i = 0; i < Column.Length; i++)
+                        {
+                            Temp[i] = Column[i].Field_ID;
+                        }
+                        return Temp;
+                    }
+                }
+            }
+            public FormName_Config[] FormName_Config1 { get; set; }
+            public CTIW1780Config()
+            {
+                #region 取的參數XML
+                Vista.CTI.DataAccess.SystemParameterDB mySystemParameterDB = new Vista.CTI.DataAccess.SystemParameterDB();
+                DataTable XMLDT = mySystemParameterDB.GetSystemParameter("CustomizedReport", "CTIW1780", null, null, null);
+                if (XMLDT.Rows.Count == 0) throw new Exception("參數錯誤(1)");
+
+                string XML = XMLDT.Rows[0]["VAR2"].ToString();
+                XmlDocument doc = new XmlDocument(); doc.LoadXml(XML);
+                XmlNode CTIW1780 = doc.DocumentElement;
+                #endregion
+
+                int num;
+                if (CTIW1780.SelectSingleNode("FormNames") == null) throw new Exception("參數錯誤(2)");
+                XmlNode FormNames = CTIW1780.SelectSingleNode("FormNames");
+                num = int.MaxValue;
+                if (FormNames.Attributes["num"] != null)
+                    if (!Int32.TryParse(FormNames.Attributes["num"].Value, out  num)) throw new Exception("參數錯誤(2-1)");
+                if (num == 0) throw new Exception("參數錯誤(2-1)");
+
+                List<FormName_Config> FormName_Config_Temp = new List<FormName_Config>();
+                int ErrorNO = 1;
+                foreach (XmlNode XmlNodeTemp in FormNames.SelectNodes("FormName"))
+                {
+                    if (num <= 0) break;
+                    FormName_Config_Temp.Add(GetFormName_Config("3-" + ErrorNO.ToString(), XmlNodeTemp));
+                    num--;
+                    ErrorNO++;
+                }
+                if (FormName_Config_Temp.Count == 0) throw new Exception("參數錯誤(4)");
+                FormName_Config1 = FormName_Config_Temp.ToArray();
+            }
+            public FormName_Config GetFormName_Config(string ErrorNO, XmlNode FormName)
+            {
+                FormName_Config FormName_Config_Temp = new FormName_Config();
+
+                if (FormName.Attributes["Name"] == null) throw new Exception("參數錯誤(" + ErrorNO + "-1)");
+                if (FormName.Attributes["Name"].Value == "") throw new Exception("參數錯誤(" + ErrorNO + "-1)");
+                if (FormName.Attributes["Title"] == null) throw new Exception("參數錯誤(" + ErrorNO + "-1)");
+
+                FormName_Config_Temp.FormName = FormName.Attributes["Name"].Value;
+                FormName_Config_Temp.Title = FormName.Attributes["Title"].Value;
+
+                #region Column
+                FormName_Config_Temp.Column = null;
+                XmlNode Columns = FormName.SelectSingleNode("Columns");
+                if (Columns != null)
+                {
+                    int num = int.MaxValue;
+                    if (Columns.Attributes["num"] != null)
+                        if (!Int32.TryParse(Columns.Attributes["num"].Value, out  num)) throw new Exception("參數錯誤(" + ErrorNO + "-2)");
+                    if (num != 0)
+                    {
+                        List<Column_Config> Column = new List<Column_Config>();
+                        foreach (XmlNode XmlNodeTemp in Columns.SelectNodes("Column"))
+                        {
+                            if (num <= 0) break;
+                            Column_Config Column_Config_Temp = new Column_Config();
+
+                            if (XmlNodeTemp.Attributes["ColumnName"] == null) throw new Exception("參數錯誤(" + ErrorNO + "-3)");
+                            if (XmlNodeTemp.Attributes["ColumnName"].Value == "") throw new Exception("參數錯誤(" + ErrorNO + "-3)");
+                            Column_Config_Temp.ColumnName = XmlNodeTemp.Attributes["ColumnName"].Value.Trim();
+
+                            Column_Config_Temp.kind = "";
+                            Column_Config_Temp.ColumnName2 = "";
+                            if (XmlNodeTemp.Attributes["ColumnName2"] != null) Column_Config_Temp.ColumnName2 = XmlNodeTemp.Attributes["ColumnName2"].Value.Trim();
+
+                            Column_Config_Temp.Field_ID = XmlNodeTemp.InnerText.Trim();
+
+                            Column.Add(Column_Config_Temp);
+                            num--;
+                        }
+                        if (Column.Count != 0) FormName_Config_Temp.Column = Column.ToArray();
+                    }
+                }
+                #endregion
+                return FormName_Config_Temp;
+            }
+        }
+      
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public DataSet[] GetWorkOrder_Report(string StartDate, string EndDate, CTIW1780Config Config)
+        {
+            Vista.CTI.DataAccess.ReportQueryDB myReportQueryDB = new Vista.CTI.DataAccess.ReportQueryDB();
+            DataTable BranchDT = myReportQueryDB.GetBranch();
+            DataTable AODataDT = myReportQueryDB.GetAOData(StartDate, EndDate);
+            DataSet[] OUTDS = new DataSet[BranchDT.Rows.Count];
+            for (int i = 0; i < BranchDT.Rows.Count; i++)
+            {
+                OUTDS[i] = new DataSet();
+                OUTDS[i].DataSetName = BranchDT.Rows[i]["BranchCode"].ToString();
+            }
+
+            for (int i = 0; i < Config.FormName_Config1.Length; i++)
+            {
+                CTIW1780Config.FormName_Config FormName_Config_Temp = Config.FormName_Config1[i];
+                DataSet DS_Temp = GetDeviation_Report(StartDate, EndDate, FormName_Config_Temp.FormName, FormName_Config_Temp.AO_Code_Field_ID, FormName_Config_Temp.Deviation_Field_ID, FormName_Config_Temp.QID_ColumnName, FormName_Config_Temp.NID_ColumnName, FormName_Config_Temp.CHName_ColumnName, FormName_Config_Temp.CSR_ColumnName, FormName_Config_Temp.ColumnName, FormName_Config_Temp.kind, FormName_Config_Temp.Field_ID, AODataDT, BranchDT);
+
+                string _FormName = new Vista.CTI.DataAccess.FormDefineDB().GetFillFormName(FormName_Config_Temp.FormName);
+                for (int j = 0; j < BranchDT.Rows.Count; j++)
+                {
+                    OUTDS[j].Tables.Add(DS_Temp.Tables[OUTDS[j].DataSetName].Copy());
+                    OUTDS[j].Tables[OUTDS[j].DataSetName].TableName = _FormName;
+                }
+            }
+
+            return OUTDS;
+        }
+        /*
+      public string ExportCTIW1780()
+      {
+          ReportQueryBiz.CTIW1780Config Config = new ReportQueryBiz.CTIW1780Config();
+          ReportQueryBiz myReportQueryBiz = new ReportQueryBiz();
+          DataSet[] ReportDS = myReportQueryBiz.GetDeviation_Report(StartDate, EndDate, Config);
+
+          List<string> OutputInfo = new List<string>();
+          foreach (DataSet dsInput in ReportDS)
+          {
+              string FileTemp = Path.Combine(OutputPath, "Call_Center_deviation_" + dsInput.DataSetName + "_" + DateTime.Now.ToString("yyyyMMdd") + ".xls");
+              Vista.Common.NPOIExport _NPOI = new Vista.Common.NPOIExport();
+              _NPOI.ExportFile(dsInput, FileTemp);
+              OutputInfo.Add(FileTemp);
+          }
+          string ZIPFileName = "Call_Center_deviation_" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".zip";
+          Vista.Common.ZipTool.ZipFiles(OutputInfo.ToArray(), Path.Combine(OutputPath, ZIPFileName), "");
+
+          foreach (string File_Temp in OutputInfo.ToArray())
+          {
+              if (File.Exists(File_Temp)) File.Delete(File_Temp);
+          }
+
+          return Path.Combine(OutputPath, ZIPFileName);
+      }
+      */
+        #endregion
+    }
+}

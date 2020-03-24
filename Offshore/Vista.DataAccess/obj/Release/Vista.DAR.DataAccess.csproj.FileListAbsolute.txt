@@ -1,0 +1,48 @@
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Vista.DAR.DataAccess.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Vista.DAR.DataAccess.pdb
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Vista.DAR.Information.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Vista.SEC.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Microsoft.Practices.ObjectBuilder2.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Microsoft.Practices.Unity.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Vista.DAR.Information.pdb
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.DataAccess\obj\Release\Vista.DAR.DataAccess.csprojResolveAssemblyReference.cache
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.DataAccess\obj\Release\Vista.DAR.DataAccess.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.DataAccess\obj\Release\Vista.DAR.DataAccess.pdb
+D:\Coding\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Vista.DAR.DataAccess.dll
+D:\Coding\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Vista.DAR.DataAccess.pdb
+D:\Coding\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\Coding\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\Coding\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Vista.DAR.Information.dll
+D:\Coding\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Vista.SEC.dll
+D:\Coding\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Microsoft.Practices.ObjectBuilder2.dll
+D:\Coding\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Microsoft.Practices.Unity.dll
+D:\Coding\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Vista.DAR.Information.pdb
+D:\Coding\ANZ_DAR\Vista.DAR.DataAccess\obj\Release\Vista.DAR.DataAccess.csprojResolveAssemblyReference.cache
+D:\Coding\ANZ_DAR\Vista.DAR.DataAccess\obj\Release\Vista.DAR.DataAccess.dll
+D:\Coding\ANZ_DAR\Vista.DAR.DataAccess\obj\Release\Vista.DAR.DataAccess.pdb
+D:\vista\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Vista.DAR.DataAccess.dll
+D:\vista\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Vista.DAR.DataAccess.pdb
+D:\vista\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\vista\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\vista\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Vista.DAR.Information.dll
+D:\vista\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Vista.SEC.dll
+D:\vista\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Microsoft.Practices.ObjectBuilder2.dll
+D:\vista\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Microsoft.Practices.Unity.dll
+D:\vista\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Vista.DAR.Information.pdb
+D:\vista\ANZ_DAR\Vista.DAR.DataAccess\obj\Release\Vista.DAR.DataAccess.csprojResolveAssemblyReference.cache
+D:\vista\ANZ_DAR\Vista.DAR.DataAccess\obj\Release\Vista.DAR.DataAccess.dll
+D:\vista\ANZ_DAR\Vista.DAR.DataAccess\obj\Release\Vista.DAR.DataAccess.pdb
+D:\vista\Coding\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Vista.DAR.DataAccess.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Vista.DAR.DataAccess.pdb
+D:\vista\Coding\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Vista.DAR.Information.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Vista.SEC.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Microsoft.Practices.ObjectBuilder2.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Microsoft.Practices.Unity.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.DataAccess\bin\Release\Vista.DAR.Information.pdb
+D:\vista\Coding\ANZ_DAR\Vista.DAR.DataAccess\obj\Release\Vista.DAR.DataAccess.csprojResolveAssemblyReference.cache
+D:\vista\Coding\ANZ_DAR\Vista.DAR.DataAccess\obj\Release\Vista.DAR.DataAccess.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.DataAccess\obj\Release\Vista.DAR.DataAccess.pdb

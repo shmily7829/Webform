@@ -1,0 +1,20 @@
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.Information\bin\Release\Vista.DAR.Information.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.Information\bin\Release\Vista.DAR.Information.pdb
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.Information\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.Information\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.Information\bin\Release\Vista.SEC.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.Information\bin\Release\Microsoft.Practices.ObjectBuilder2.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.Information\bin\Release\Microsoft.Practices.Unity.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.Information\obj\Release\Vista.DAR.Information.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.Information\obj\Release\Vista.DAR.Information.pdb
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.Information\obj\Release\Vista.DAR.Information.csprojResolveAssemblyReference.cache
+D:\vista\Coding\ANZ_DAR\Vista.DAR.Information\bin\Release\Vista.DAR.Information.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.Information\bin\Release\Vista.DAR.Information.pdb
+D:\vista\Coding\ANZ_DAR\Vista.DAR.Information\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.Information\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.Information\bin\Release\Vista.SEC.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.Information\bin\Release\Microsoft.Practices.ObjectBuilder2.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.Information\bin\Release\Microsoft.Practices.Unity.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.Information\obj\Release\Vista.DAR.Information.csprojResolveAssemblyReference.cache
+D:\vista\Coding\ANZ_DAR\Vista.DAR.Information\obj\Release\Vista.DAR.Information.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.Information\obj\Release\Vista.DAR.Information.pdb

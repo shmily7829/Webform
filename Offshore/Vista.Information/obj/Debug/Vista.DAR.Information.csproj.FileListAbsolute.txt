@@ -1,0 +1,30 @@
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.Information\bin\Debug\Vista.DAR.Information.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.Information\bin\Debug\Vista.DAR.Information.pdb
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.Information\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.Information\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.Information\bin\Debug\Vista.SEC.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.Information\bin\Debug\Microsoft.Practices.ObjectBuilder2.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.Information\bin\Debug\Microsoft.Practices.Unity.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.Information\obj\Debug\Vista.DAR.Information.dll
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.Information\obj\Debug\Vista.DAR.Information.pdb
+D:\Arlen\Desktop\2. ANZ - ANZ-170308-001 - Data Retention\ANZ_DAR\Vista.DAR.Information\obj\Debug\Vista.DAR.Information.csprojResolveAssemblyReference.cache
+D:\vista\ANZ_DAR\Vista.DAR.Information\bin\Debug\Vista.DAR.Information.dll
+D:\vista\ANZ_DAR\Vista.DAR.Information\bin\Debug\Vista.DAR.Information.pdb
+D:\vista\ANZ_DAR\Vista.DAR.Information\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\vista\ANZ_DAR\Vista.DAR.Information\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\vista\ANZ_DAR\Vista.DAR.Information\bin\Debug\Vista.SEC.dll
+D:\vista\ANZ_DAR\Vista.DAR.Information\bin\Debug\Microsoft.Practices.ObjectBuilder2.dll
+D:\vista\ANZ_DAR\Vista.DAR.Information\bin\Debug\Microsoft.Practices.Unity.dll
+D:\vista\ANZ_DAR\Vista.DAR.Information\obj\Debug\Vista.DAR.Information.csprojResolveAssemblyReference.cache
+D:\vista\ANZ_DAR\Vista.DAR.Information\obj\Debug\Vista.DAR.Information.dll
+D:\vista\ANZ_DAR\Vista.DAR.Information\obj\Debug\Vista.DAR.Information.pdb
+D:\vista\Coding\ANZ_DAR\Vista.DAR.Information\bin\Debug\Vista.DAR.Information.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.Information\bin\Debug\Vista.DAR.Information.pdb
+D:\vista\Coding\ANZ_DAR\Vista.DAR.Information\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.Information\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.Information\bin\Debug\Vista.SEC.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.Information\bin\Debug\Microsoft.Practices.ObjectBuilder2.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.Information\bin\Debug\Microsoft.Practices.Unity.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.Information\obj\Debug\Vista.DAR.Information.csprojResolveAssemblyReference.cache
+D:\vista\Coding\ANZ_DAR\Vista.DAR.Information\obj\Debug\Vista.DAR.Information.dll
+D:\vista\Coding\ANZ_DAR\Vista.DAR.Information\obj\Debug\Vista.DAR.Information.pdb

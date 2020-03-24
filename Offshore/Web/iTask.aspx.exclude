@@ -1,0 +1,72 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="iTask.aspx.cs" Inherits="iTask"
+    EnableEventValidation="false" %>
+
+<%@ Register Assembly="Infragistics35.WebUI.UltraWebListbar.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb"
+    Namespace="Infragistics.WebUI.UltraWebListbar" TagPrefix="iglbar" %>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=big5" />
+    <link href="css/navi.css" type="text/css" rel="stylesheet" />
+    <title>menu</title>
+
+    <script type="text/javascript">
+        function shows(val) {
+            parent.document.getElementsByTagName('iframe')[2].src = val;
+            return false;
+        }
+
+        //徵審畫面關閉後，重新整理清單畫面
+        function ReloadShows() {
+            var pp = parent.document.getElementsByTagName('iframe')[2].src;
+
+            if (pp.indexOf("TaskList") > -1)
+            { parent.document.getElementsByTagName('iframe')[2].src = pp; }
+
+            return false;
+        }
+
+        function ClickItem(thisname) {
+            var ahref = document.getElementsByTagName("a")
+            for (var i = 0; i < ahref.length; i++) {
+                //alert(ahref[i].getAttribute("name"));  
+                if (ahref[i].getAttribute("name") == thisname)
+                { ahref[i].className = "ClickItem"; }
+                else
+                { ahref[i].className = "link-03-item"; }
+            }
+
+            var ttable = document.getElementsByTagName("Table")
+            for (var i = 0; i < ttable.length; i++) {
+                if (ttable[i].getAttribute("name") == 'tb' + thisname)
+                { ttable[i].className = "ClickItem"; }
+                else
+                { ttable[i].className = "link-03-item"; }
+            }
+        }
+    </script>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
+        <asp:Panel ID="Panel1" runat="server" ScrollBars="Auto">
+            <table class="navi" width="100%" Height="1500px"  border="0" cellpadding="0" cellspacing="0">
+                <tr valign="top">
+                    <td>
+                        <iglbar:UltraWebListbar ID="UltraWebListbar1" runat="server" Width="200" Height="100%"  >
+                            <DefaultGroupButtonStyle CssClass="close" />
+                            <DefaultGroupButtonSelectedStyle CssClass="open" />
+                            <DefaultGroupButtonHoverStyle CssClass="open" />
+                            <DefaultItemStyle CssClass="open_items" />
+                            <DefaultItemHoverStyle CssClass="open_items_hover" />
+                            <DefaultItemSelectedStyle CssClass="open_items_hover" />
+                        </iglbar:UltraWebListbar>
+                    </td>
+                    <td width="1px" style="background-color: #A9B7CB;"></td>
+                </tr>
+            </table>
+        </asp:Panel>
+    </form>
+</body>
+</html>
