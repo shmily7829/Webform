@@ -65,6 +65,7 @@ public partial class Forms_Sys_Forms_CASA7100 : System.Web.UI.Page
         //例如，您可以使用 FileContent 屬性傳回的 Stream 物件，將檔案的內容做為位元組進行讀取並將其以位元組陣列儲存。 
         //FileContent 屬性，型別：System.IO.Stream 
 
+        //檢查上傳檔案的附檔名
         string fileExt = Path.GetExtension(file).ToLower();
        
         using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read))
@@ -79,9 +80,10 @@ public partial class Forms_Sys_Forms_CASA7100 : System.Web.UI.Page
             if (workbook == null) 
             { return null; }
 
+            //取得目標sheet,指定為第1個分頁
             ISheet sheet = workbook.GetSheetAt(0);
 
-            //表頭  
+            //取得表頭  
             IRow header = sheet.GetRow(sheet.FirstRowNum);
             List<int> columns = new List<int>();
             for (int i = 0; i < header.LastCellNum; i++)
@@ -95,7 +97,7 @@ public partial class Forms_Sys_Forms_CASA7100 : System.Web.UI.Page
                     dt.Columns.Add(new DataColumn(obj.ToString()));
                 columns.Add(i);
             }
-            //資料  
+            //取得資料內容  
             for (int i = sheet.FirstRowNum + 1; i <= sheet.LastRowNum; i++)
             {
                 DataRow dr = dt.NewRow();
