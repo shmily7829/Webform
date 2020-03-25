@@ -29,3 +29,14 @@ D:\教育訓練\Offshore\Vista.Information\obj\Debug\Vista.Information.csproj.Co
 D:\教育訓練\Offshore\Vista.Information\obj\Debug\Vista.Information.csproj.CopyComplete
 D:\教育訓練\Offshore\Vista.Information\obj\Debug\Vista.Information.dll
 D:\教育訓練\Offshore\Vista.Information\obj\Debug\Vista.Information.pdb
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Information\bin\Debug\Vista.Information.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Information\bin\Debug\Vista.Information.pdb
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Information\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Information\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Information\bin\Debug\Vista.SEC.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Information\bin\Debug\Microsoft.Practices.ObjectBuilder2.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Information\bin\Debug\Microsoft.Practices.Unity.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Information\obj\Debug\Vista.Information.csprojAssemblyReference.cache
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Information\obj\Debug\Vista.Information.csproj.CopyComplete
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Information\obj\Debug\Vista.Information.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Information\obj\Debug\Vista.Information.pdb

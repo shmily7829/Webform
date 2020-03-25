@@ -38,3 +38,17 @@ D:\教育訓練\Offshore\Vista.DataAccess\obj\Debug\Vista.DataAccess.csproj.Core
 D:\教育訓練\Offshore\Vista.DataAccess\obj\Debug\Vista.DataAccess.csproj.CopyComplete
 D:\教育訓練\Offshore\Vista.DataAccess\obj\Debug\Vista.DataAccess.dll
 D:\教育訓練\Offshore\Vista.DataAccess\obj\Debug\Vista.DataAccess.pdb
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.DataAccess\bin\Debug\Vista.DataAccess.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.DataAccess\bin\Debug\Vista.DataAccess.pdb
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.DataAccess\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.DataAccess\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.DataAccess\bin\Debug\Vista.DBSSEC.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.DataAccess\bin\Debug\Vista.Information.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.DataAccess\bin\Debug\Vista.SEC.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.DataAccess\bin\Debug\Microsoft.Practices.ObjectBuilder2.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.DataAccess\bin\Debug\Microsoft.Practices.Unity.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.DataAccess\bin\Debug\Vista.Information.pdb
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.DataAccess\obj\Debug\Vista.DataAccess.csprojAssemblyReference.cache
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.DataAccess\obj\Debug\Vista.DataAccess.csproj.CopyComplete
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.DataAccess\obj\Debug\Vista.DataAccess.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.DataAccess\obj\Debug\Vista.DataAccess.pdb

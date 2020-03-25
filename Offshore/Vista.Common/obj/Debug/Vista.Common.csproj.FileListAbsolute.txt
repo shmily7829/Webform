@@ -219,3 +219,17 @@ D:\教育訓練\Offshore\Vista.Common\obj\Debug\Vista.Common.csproj.CoreCompileI
 D:\教育訓練\Offshore\Vista.Common\obj\Debug\Vista.Common.csproj.CopyComplete
 D:\教育訓練\Offshore\Vista.Common\obj\Debug\Vista.Common.dll
 D:\教育訓練\Offshore\Vista.Common\obj\Debug\Vista.Common.pdb
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Common\bin\Debug\Vista.Common.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Common\bin\Debug\Vista.Common.pdb
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Common\bin\Debug\AntiXSSLibrary.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Common\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Common\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Common\bin\Debug\Vista.SEC.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Common\bin\Debug\Vista.SEC.Information.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Common\bin\Debug\Microsoft.Practices.ObjectBuilder2.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Common\bin\Debug\Microsoft.Practices.Unity.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Common\bin\Debug\Vista.DBSSEC.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Common\obj\Debug\Vista.Common.csprojAssemblyReference.cache
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Common\obj\Debug\Vista.Common.csproj.CopyComplete
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Common\obj\Debug\Vista.Common.dll
+C:\ASVT\教育訓練\WebForm教育訓練\WebForm\Offshore\Vista.Common\obj\Debug\Vista.Common.pdb
